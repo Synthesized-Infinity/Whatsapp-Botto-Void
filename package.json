@@ -1,0 +1,36 @@
+{
+  "name": "whatsapp-botto-void",
+  "version": "1.0.0",
+  "description": "A fully Object Oriented WhatsApp bot built with TypeScript",
+  "main": "dist/void.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist",
+    "lint": "eslint \"src/**/*.ts\"",
+    "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void.git"
+  },
+  "keywords": [
+    "bot",
+    "typescript",
+    "whatsapp",
+    "whatsapp-botto"
+  ],
+  "author": "Synthesized Infinity",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/issues"
+  },
+  "homepage": "https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void#readme",
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.26.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  }
+}
