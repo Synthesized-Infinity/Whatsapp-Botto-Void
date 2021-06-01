@@ -25,23 +25,23 @@ export default class Command extends BaseCommand {
             let text = `🗒️ *${this.client.config.name} Command List* 🗒️\n\n`
             const sortedKeys = Object.keys(categories).sort()
             for (const key of sortedKeys)
-                text += `*${this.client.util.capitalize(key)}*\n${categories[key]
+                text += `🌟 *${this.client.util.capitalize(key)} 🌟*\n${categories[key]
                     .map((command) => command.config?.command)
-                    .join(',')}\n`
+                    .join(',')}\n\n💠 *Note: Use ${this.client.config.prefix}help <command_name>* to view the command info`
             return void M.reply(text)
         }
         const command = this.handler.commands.get(parsedArgs.joined.toLowerCase())
         M.reply(
             !command
-                ? 'No Command Found!'
-                : `Command: ${command.config?.command}\nCategory: ${command.config?.category}\nUsage: ${command.config?.usage}\n\nDescription: ${command.config?.usage}`
+                ? 'No Command Found with ""'
+                : `🍁 *Command:* ${command.config?.command}*\n🍀 *Category:* ${command.config?.category}\n🍇 *Usage:* ${command.config?.usage}\n\n*Description:* ${command.config?.usage}\n\n*Note:*  "<>" means the param is optional and [] means they are required, you do not need to use them while using commands`
         )
     }
 
     config = {
         command: 'help',
-        description: 'Displays the help menu',
+        description: 'Displays the help menu or shows the info of the command provided',
         category: 'general',
-        usage: `${this.client.config.prefix}help`
+        usage: `${this.client.config.prefix}help <command_name>`
     }
 }
