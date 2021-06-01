@@ -1,13 +1,16 @@
-import { existsSync, writeFileSync } from 'fs'
-import { connected } from 'process'
+import { config } from 'dotenv'
+
+config()
+
+import { writeFileSync } from 'fs'
 import MessageHandler from './Handlers/MessageHandler'
 import WAClient from './lib/WAClient'
-import { ISimplifiedMessage } from './typings'
 
 const client = new WAClient({
     name: process.env.NAME || 'Void',
     session: process.env.SESSION || 'Void',
-    prefix: process.env.PREFIX || '!'
+    prefix: process.env.PREFIX || '!',
+    mods: (process.env.MODS || '').split(',').map((number) => `${number}@s.whatsapp.net`)
 })
 
 client.connect().then(async () => {

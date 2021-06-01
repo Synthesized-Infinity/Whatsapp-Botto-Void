@@ -3,14 +3,16 @@ import chalk from 'chalk'
 import { existsSync, readdirSync, statSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
-import { IConfig, ISimplifiedMessage } from '../typings'
+import { IConfig, IExtendedGroupMetadata, ISimplifiedMessage } from '../typings'
 
 export default class WAClient extends Base {
     constructor(public config: IConfig) {
         super()
-
+        this.logger.level = 'fatal'
         const sessionFile = `./SESSION_${this.config.session}.json`
+
         existsSync(sessionFile) && this.loadAuthInfo(sessionFile)
+
         this.on('chat-update', (update) => {
             if (!update.messages) return void null
             const messages = update.messages.all()
@@ -21,7 +23,7 @@ export default class WAClient extends Base {
         this.on('CB:action,,call', async (json) => this.emit('call', json[2][0][1].from))
     }
 
-    emitNewMessage = async (M: Promise<ISimplifiedMessage>) => this.emit('new-message', await M)
+    emitNewMessage = async (M: Promise<ISimplifiedMessage>): Promise<void> => void this.emit('new-message', await M)
 
     supportedMediaMessages = [MessageType.image, MessageType.video]
 
@@ -31,11 +33,14 @@ export default class WAClient extends Base {
         const type = (Object.keys(M.message || {})[0] || '') as MessageType
         const user = chat === 'group' ? M.participant : jid
         const info = this.getContact(user)
+        const groupMetadata: IExtendedGroupMetadata | null = chat === 'group' ? await this.groupMetadata(jid) : null
+        if (groupMetadata) groupMetadata.admins = groupMetadata.participants.map((user) => user.jid)
         const sender = {
             jid: user,
-            username: info.notify || info.vname || info.name || 'User'
+            username: info.notify || info.vname || info.name || 'User',
+            isAdmin: (groupMetadata && groupMetadata.admins) ? groupMetadata.admins.includes(user) : false
         }
-        const content: string | null =
+        const content: string | null = 
             type === MessageType.text && M.message?.conversation
                 ? M.message.conversation
                 : this.supportedMediaMessages.includes(type)
@@ -49,24 +54,24 @@ export default class WAClient extends Base {
             chat,
             sender,
             args: content?.split(' ') || [],
-            reply: async (content: string | Buffer, type?: MessageType, caption?: string, mime?: Mimetype) =>
-                await this.sendMessage(jid, content, type || MessageType.text, { quoted: M, caption: caption }),
+            reply: async (content: string | Buffer, type?: MessageType, mime?: Mimetype, mention?: string[], caption?: string) =>
+                await this.sendMessage(jid, content, type || MessageType.text, { quoted: M, caption: caption, mimetype: mime, contextInfo: { mentionedJid: mention } }),
             mentioned: this.getMentionedUsers(M),
             from: jid,
-            groupMetadata: chat === 'group' ? await this.groupMetadata(jid) : null,
+            groupMetadata,
             WAMessage: M
         }
     }
 
     log = (text: string, error?: boolean): void => {
         console.log(
-            chalk[error ? 'green' : 'red']('[VOID]'),
+            chalk[error ? 'red' : 'green']('[VOID]'),
             chalk.blue(moment(Date.now() * 1000).format('DD/MM HH:mm:ss')),
-            chalk.yellow(text)
+            chalk.yellowBright(text)
         )
     }
 
-    getMentionedUsers = (M: WAMessage) => {
+    getMentionedUsers = (M: WAMessage): string[] => {
         const types = Object.values(MessageType)
         const maps = types.map((type) =>
             M?.message?.[type as MessageType.extendedText]?.contextInfo?.mentionedJid ||
@@ -77,6 +82,7 @@ export default class WAClient extends Base {
         return maps.filter((map) => map.every((item) => item))[0] as string[]
     }
 
+    //eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getContact = (jid: string) => {
         return this.contacts[jid] || {}
     }
@@ -96,6 +102,8 @@ export default class WAClient extends Base {
             }
             read(directory)
             return results
-        }
+        },
+
+        capitalize: (text: string): string => `${text.charAt(0).toUpperCase()}${text.slice(1)}`
     }
 }
