@@ -9,7 +9,7 @@ export default class WAClient extends Base {
     constructor(public config: IConfig) {
         super()
         this.logger.level = 'fatal'
-        const sessionFile = `./SESSION_${this.config.session}.json`
+        const sessionFile = `./${this.config.session}_session.json`
 
         existsSync(sessionFile) && this.loadAuthInfo(sessionFile)
 

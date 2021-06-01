@@ -15,7 +15,7 @@ const client = new WAClient({
 
 client.connect().then(async () => {
     client.log('CONNECTED')
-    writeFileSync(`./SESSION_${client.config.session}.json`, JSON.stringify(client.base64EncodedAuthInfo(), null, '\t'))
+    writeFileSync(`./${client.config.session}_session.json`, JSON.stringify(client.base64EncodedAuthInfo(), null, '\t'))
     const messageHandler = new MessageHandler(client)
     messageHandler.loadCommands()
     client.on('new-message', messageHandler.handleMessage)
