@@ -34,7 +34,8 @@ export default class WAClient extends Base {
         const user = chat === 'group' ? M.participant : jid
         const info = this.getContact(user)
         const groupMetadata: IExtendedGroupMetadata | null = chat === 'group' ? await this.groupMetadata(jid) : null
-        if (groupMetadata) groupMetadata.admins = groupMetadata.participants.map((user) => user.jid)
+        if (groupMetadata)
+            groupMetadata.admins = groupMetadata.participants.filter((user) => user.isAdmin).map((user) => user.jid)
         const sender = {
             jid: user,
             username: info.notify || info.vname || info.name || 'User',
