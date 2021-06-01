@@ -12,8 +12,7 @@ export default class Command extends BaseCommand {
     }
 
     //eslint-disable-next-line
-    run = async (M: ISimplifiedMessage): Promise<void> => {
-    }
+    run = async (M: ISimplifiedMessage): Promise<void> => {}
 
     config = {
         command: 'command_goes_here',

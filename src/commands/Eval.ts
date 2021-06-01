@@ -14,11 +14,11 @@ export default class Command extends BaseCommand {
         try {
             const output = eval(parsedArgs.joined) || 'Executed JS Sucessfully!'
             console.log(output)
-            out = JSON.stringify(output) 
-        } catch(err) {
+            out = JSON.stringify(output)
+        } catch (err) {
             out = err.message
         }
-        return void await M.reply(out)
+        return void (await M.reply(out))
     }
 
     config = {

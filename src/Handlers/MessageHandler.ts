@@ -34,7 +34,7 @@ export default class MessageHandler {
         this.client.log(`Successfully Loaded ${this.commands.size} Commands`)
     }
 
-    parseArgs = (args: string[]): IParsedArgs =>{
+    parseArgs = (args: string[]): IParsedArgs => {
         const slicedArgs = args.slice(1)
         return {
             args: slicedArgs,

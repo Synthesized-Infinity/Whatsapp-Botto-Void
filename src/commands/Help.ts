@@ -15,7 +15,7 @@ export default class Command extends BaseCommand {
             for (const command of commands) {
                 const info = this.handler.commands.get(command)
                 if (!command) continue
-                if (!info?.config?.category || (info.config.category === 'dev')) continue
+                if (!info?.config?.category || info.config.category === 'dev') continue
                 if (Object.keys(categories).includes(info.config.category)) categories[info.config.category].push(info)
                 else {
                     categories[info.config.category] = []
@@ -24,11 +24,18 @@ export default class Command extends BaseCommand {
             }
             let text = `🗒️ *${this.client.config.name} Command List* 🗒️\n\n`
             const sortedKeys = Object.keys(categories).sort()
-            for (const key of sortedKeys)  text += `*${this.client.util.capitalize(key)}*\n${categories[key].map((command) => command.config?.command).join(',')}\n`
+            for (const key of sortedKeys)
+                text += `*${this.client.util.capitalize(key)}*\n${categories[key]
+                    .map((command) => command.config?.command)
+                    .join(',')}\n`
             return void M.reply(text)
-        } 
+        }
         const command = this.handler.commands.get(parsedArgs.joined.toLowerCase())
-        M.reply((!command) ? 'No Command Found!' : `Command: ${command.config?.command}\nCategory: ${command.config?.category}\nUsage: ${command.config?.usage}\n\nDescription: ${command.config?.usage}`)
+        M.reply(
+            !command
+                ? 'No Command Found!'
+                : `Command: ${command.config?.command}\nCategory: ${command.config?.category}\nUsage: ${command.config?.usage}\n\nDescription: ${command.config?.usage}`
+        )
     }
 
     config = {

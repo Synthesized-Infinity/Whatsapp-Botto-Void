@@ -38,9 +38,9 @@ export default class WAClient extends Base {
         const sender = {
             jid: user,
             username: info.notify || info.vname || info.name || 'User',
-            isAdmin: (groupMetadata && groupMetadata.admins) ? groupMetadata.admins.includes(user) : false
+            isAdmin: groupMetadata && groupMetadata.admins ? groupMetadata.admins.includes(user) : false
         }
-        const content: string | null = 
+        const content: string | null =
             type === MessageType.text && M.message?.conversation
                 ? M.message.conversation
                 : this.supportedMediaMessages.includes(type)
@@ -54,8 +54,19 @@ export default class WAClient extends Base {
             chat,
             sender,
             args: content?.split(' ') || [],
-            reply: async (content: string | Buffer, type?: MessageType, mime?: Mimetype, mention?: string[], caption?: string) =>
-                await this.sendMessage(jid, content, type || MessageType.text, { quoted: M, caption: caption, mimetype: mime, contextInfo: { mentionedJid: mention } }),
+            reply: async (
+                content: string | Buffer,
+                type?: MessageType,
+                mime?: Mimetype,
+                mention?: string[],
+                caption?: string
+            ) =>
+                await this.sendMessage(jid, content, type || MessageType.text, {
+                    quoted: M,
+                    caption: caption,
+                    mimetype: mime,
+                    contextInfo: { mentionedJid: mention }
+                }),
             mentioned: this.getMentionedUsers(M),
             from: jid,
             groupMetadata,
