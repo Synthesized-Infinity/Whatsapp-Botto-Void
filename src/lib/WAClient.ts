@@ -1,5 +1,6 @@
 import { MessageType, Mimetype, WAConnection as Base, WAMessage } from '@adiwajshing/baileys'
 import chalk from 'chalk'
+import qrImage from 'qr-image'
 import { existsSync, readdirSync, statSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
@@ -20,8 +21,14 @@ export default class WAClient extends Base {
             this.emitNewMessage(this.simplifyMessage(messages[0]))
         })
 
+        this.on('qr', (qr) => {
+            this.QR = qrImage.imageSync(qr)
+        })
+
         this.on('CB:action,,call', async (json) => this.emit('call', json[2][0][1].from))
     }
+
+    QR!: Buffer
 
     emitNewMessage = async (M: Promise<ISimplifiedMessage>): Promise<void> => void this.emit('new-message', await M)
 
