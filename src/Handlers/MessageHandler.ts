@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import { join } from 'path'
 import BaseCommand from '../lib/BaseCommand'
 import WAClient from '../lib/WAClient'
@@ -23,15 +24,16 @@ export default class MessageHandler {
         const path = join(__dirname, '..', 'commands')
         const files = this.client.util.readdirRecursive(path)
         files.map((file) => {
-            if (!file.startsWith('_')) {
+            const filename = file.split('/')
+            if (!filename[filename.length - 1].startsWith('_')) {
                 //eslint-disable-next-line @typescript-eslint/no-var-requires
                 const command: BaseCommand = new (require(file).default)(this.client, this)
                 this.commands.set(command.config.command, command)
-                this.client.log(`Loaded: ${command.config.command} from ${file}`)
+                this.client.log(`Loaded: ${chalk.green(command.config.command)} from ${chalk.green(file)}`)
                 return command
             }
         })
-        this.client.log(`Successfully Loaded ${this.commands.size} Commands`)
+        this.client.log(`Successfully Loaded ${chalk.greenBright(this.commands.size)} Commands`)
     }
 
     parseArgs = (args: string[]): IParsedArgs => {
