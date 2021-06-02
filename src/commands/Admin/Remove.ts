@@ -18,7 +18,7 @@ export default class Command extends BaseCommand {
             const username = usr.notify || usr.vname || usr.name || user.split('@')[0]
             if (M.groupMetadata?.admins?.includes(user)) M.reply(`❌ Skipped *${username}* as they're an admin`)
             else {
-                await this.client.groupDemoteAdmin(M.from, [user])
+                await this.client.groupRemove(M.from, [user])
                 M.reply(`🏌️‍♂️Sucessfully Removed *${username}*`)
             }
         })
