@@ -9,11 +9,11 @@ import { IConfig, IExtendedGroupMetadata, ISimplifiedMessage } from '../typings'
 export default class WAClient extends Base {
     constructor(public config: IConfig) {
         super()
+        this.browserDescription[0] = 'WhatsApp-Botto-Void'
         this.logger.level = 'fatal'
         const sessionFile = `./${this.config.session}_session.json`
 
         existsSync(sessionFile) && this.loadAuthInfo(sessionFile)
-
         this.on('chat-update', (update) => {
             if (!update.messages) return void null
             const messages = update.messages.all()
