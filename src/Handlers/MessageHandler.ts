@@ -19,8 +19,8 @@ export default class MessageHandler {
         if (command.config?.adminonly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
         try {
-            return void await command.run(M, this.parseArgs(args))
-        } catch(err) {
+            return void (await command.run(M, this.parseArgs(args)))
+        } catch (err) {
             this.client.log(err.message, true)
         }
     }

@@ -55,10 +55,14 @@ export default class WAClient extends Base {
                 ? this.supportedMediaMessages
                       .map((type) => M.message?.[type as MessageType.image | MessageType.video]?.caption)
                       .filter((caption) => caption)[0] || ''
-                : (type === MessageType.extendedText && M.message?.extendedTextMessage?.text) ? M.message?.extendedTextMessage.text : null
-        const quoted: ISimplifiedMessage['quoted'] = {
-        }
-        quoted.message =  M?.message?.[type as MessageType.extendedText]?.contextInfo?.quotedMessage ? JSON.parse(JSON.stringify(M).replace('quotedM', 'm')).message?.[type as MessageType.extendedText].contextInfo : null
+                : type === MessageType.extendedText && M.message?.extendedTextMessage?.text
+                ? M.message?.extendedTextMessage.text
+                : null
+        const quoted: ISimplifiedMessage['quoted'] = {}
+        quoted.message = M?.message?.[type as MessageType.extendedText]?.contextInfo?.quotedMessage
+            ? JSON.parse(JSON.stringify(M).replace('quotedM', 'm')).message?.[type as MessageType.extendedText]
+                  .contextInfo
+            : null
         quoted.sender = M.message?.[type as MessageType.extendedText]?.contextInfo?.participant
         return {
             type,
@@ -96,8 +100,11 @@ export default class WAClient extends Base {
     }
 
     getMentionedUsers = (M: WAMessage, type: string): string[] => {
-        const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue => value !== null && value !== undefined;
-        const array = M?.message?.[type as MessageType.extendedText]?.contextInfo?.mentionedJid ? M?.message[type as MessageType.extendedText]?.contextInfo?.mentionedJid : [] 
+        const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue =>
+            value !== null && value !== undefined
+        const array = M?.message?.[type as MessageType.extendedText]?.contextInfo?.mentionedJid
+            ? M?.message[type as MessageType.extendedText]?.contextInfo?.mentionedJid
+            : []
         return (array || []).filter(notEmpty)
     }
 
