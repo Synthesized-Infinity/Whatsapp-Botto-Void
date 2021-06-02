@@ -23,7 +23,7 @@ export default class Command extends BaseCommand {
 
     config = {
         command: 'eval',
-        description: 'Evaluates JavaScript',
+        description: 'Evaluates JavaScript ➕ ',
         category: 'dev',
         usage: `${this.client.config.prefix}eval`
     }
