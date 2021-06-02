@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { ISessionModel } from '../../typings'
+import { ISessionModel } from '../../../typings'
 
 const SessionSchema = new Schema({
     ID: {
