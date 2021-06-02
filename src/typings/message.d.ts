@@ -21,5 +21,9 @@ export interface ISimplifiedMessage {
         username: string
         isAdmin: boolean
     }
+    quoted?: {
+        message?: WAMessage | null
+        sender?: string | null
+    } | null
     WAMessage: WAMessage
 }

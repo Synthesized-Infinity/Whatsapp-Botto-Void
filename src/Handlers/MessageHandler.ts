@@ -18,7 +18,11 @@ export default class MessageHandler {
         if (!command) return void M.reply('No Command Found! Try using one from the help list.')
         if (command.config?.adminonly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
-        return void command.run(M, this.parseArgs(args))
+        try {
+            return void await command.run(M, this.parseArgs(args))
+        } catch(err) {
+            this.client.log(err.message, true)
+        }
     }
 
     loadCommands = (): void => {

@@ -56,11 +56,16 @@ export default class WAClient extends Base {
                       .map((type) => M.message?.[type as MessageType.image | MessageType.video]?.caption)
                       .filter((caption) => caption)[0] || ''
                 : (type === MessageType.extendedText && M.message?.extendedTextMessage?.text) ? M.message?.extendedTextMessage.text : null
+        const quoted: ISimplifiedMessage['quoted'] = {
+        }
+        quoted.message =  M?.message?.[type as MessageType.extendedText]?.contextInfo?.quotedMessage ? JSON.parse(JSON.stringify(M).replace('quotedM', 'm')).message?.[type as MessageType.extendedText].contextInfo : null
+        quoted.sender = M.message?.[type as MessageType.extendedText]?.contextInfo?.participant
         return {
             type,
             content,
             chat,
             sender,
+            quoted,
             args: content?.split(' ') || [],
             reply: async (
                 content: string | Buffer,
