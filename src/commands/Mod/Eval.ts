@@ -25,6 +25,6 @@ export default class Command extends BaseCommand {
         command: 'eval',
         description: 'Evaluates JavaScript ➕ ',
         category: 'dev',
-        usage: `${this.client.config.prefix}eval`
+        usage: `${this.client.config.prefix}eval [JS CODE]`
     }
 }

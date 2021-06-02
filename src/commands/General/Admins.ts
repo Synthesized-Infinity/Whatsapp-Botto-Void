@@ -21,6 +21,6 @@ export default class Command extends BaseCommand {
         command: 'admins',
         description: 'Tags all Admins 🎖️',
         category: 'general',
-        usage: `${this.client.config.prefix}admins`
+        usage: `${this.client.config.prefix}admins (Message)`
     }
 }

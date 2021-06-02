@@ -46,6 +46,6 @@ export default class Command extends BaseCommand {
         command: 'help',
         description: 'Displays the help menu or shows the info of the command provided',
         category: 'general',
-        usage: `${this.client.config.prefix}help <command_name>`
+        usage: `${this.client.config.prefix}help (command_name)`
     }
 }

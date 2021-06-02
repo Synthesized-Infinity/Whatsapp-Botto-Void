@@ -26,9 +26,9 @@ export default class Command extends BaseCommand {
 
     config = {
         adminonly: true,
-        command: 'demote',
+        command: 'remove',
         description: 'demotes the mentioned users',
         category: 'admin',
-        usage: `${this.client.config.prefix}admins`
+        usage: `${this.client.config.prefix}promote [@mention | tag]`
     }
 }

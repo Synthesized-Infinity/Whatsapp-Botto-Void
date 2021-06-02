@@ -30,6 +30,6 @@ export default class Command extends BaseCommand {
         command: 'sticker',
         description: 'Converts images/videos into stickers',
         category: 'utils',
-        usage: `${this.client.config.prefix}hi`
+        usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`
     }
 }

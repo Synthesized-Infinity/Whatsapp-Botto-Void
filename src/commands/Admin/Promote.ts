@@ -29,6 +29,6 @@ export default class Command extends BaseCommand {
         command: 'promote',
         description: 'promotes the mentioned users',
         category: 'admin',
-        usage: `${this.client.config.prefix}admins`
+        usage: `${this.client.config.prefix}promote [@mention | tag]`
     }
 }
