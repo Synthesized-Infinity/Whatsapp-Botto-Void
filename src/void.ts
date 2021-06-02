@@ -31,7 +31,6 @@ db.once('open', () => client.log(chalk.green('Connected to Database!')))
 new Server(Number(process.env.PORT) || 4000, client)
 
 const start = async () => {
-
     client.on('open', async () => {
         client.log(chalk.green('Connected to WhatsApp!'))
         await client.saveAuthinfo(client.config.session)
@@ -40,11 +39,9 @@ const start = async () => {
     client.on('new-message', messageHandler.handleMessage)
 
     await client.connect()
-
 }
 
 client.getAuthInfo(client.config.session).then((session) => {
     if (session) client.loadAuthInfo(session)
     start()
 })
-

@@ -23,7 +23,13 @@ export default class WAClient extends Base {
         })
 
         this.on('qr', (qr) => {
-            this.log(chalk.redBright(`Scan the QR code above to continue | You can also authenticate at http://localhost:${process.env.PORT || 4000}`))
+            this.log(
+                chalk.redBright(
+                    `Scan the QR code above to continue | You can also authenticate at http://localhost:${
+                        process.env.PORT || 4000
+                    }`
+                )
+            )
             this.QR = qrImage.imageSync(qr)
         })
 
@@ -51,8 +57,7 @@ export default class WAClient extends Base {
         writeFileSync(`./${ID}_session.json`, JSON.stringify(this.base64EncodedAuthInfo(), null, '\t'))
         this.log(chalk.green(`Saved Authinfo!`))
         return void (await this.DB.session.updateOne({ ID }, { $set: { session: this.base64EncodedAuthInfo() } }))
-
-    } 
+    }
 
     emitNewMessage = async (M: Promise<ISimplifiedMessage>): Promise<void> => void this.emit('new-message', await M)
 
