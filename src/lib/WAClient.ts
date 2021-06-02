@@ -1,19 +1,20 @@
 import { MessageType, Mimetype, WAConnection as Base, WAMessage } from '@adiwajshing/baileys'
 import chalk from 'chalk'
 import qrImage from 'qr-image'
-import { existsSync, readdirSync, statSync } from 'fs'
+import { existsSync, readdirSync, statSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
-import { IConfig, IExtendedGroupMetadata, ISimplifiedMessage } from '../typings'
+import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage } from '../typings'
+import { UserModel } from './Mongo/Models/User'
+import { GroupModel } from './Mongo/Models/Group'
+import { SessionModel } from './Mongo/Models/Session'
 
 export default class WAClient extends Base {
     constructor(public config: IConfig) {
         super()
         this.browserDescription[0] = 'WhatsApp-Botto-Void'
         this.logger.level = 'fatal'
-        const sessionFile = `./${this.config.session}_session.json`
 
-        existsSync(sessionFile) && this.loadAuthInfo(sessionFile)
         this.on('chat-update', (update) => {
             if (!update.messages) return void null
             const messages = update.messages.all()
@@ -22,13 +23,36 @@ export default class WAClient extends Base {
         })
 
         this.on('qr', (qr) => {
+            this.log(chalk.redBright(`Scan the QR code above to continue | You can also authenticate at http://localhost:${process.env.PORT || 4000}`))
             this.QR = qrImage.imageSync(qr)
         })
 
         this.on('CB:action,,call', async (json) => this.emit('call', json[2][0][1].from))
     }
 
+    DB: IDBModels = {
+        user: UserModel,
+        group: GroupModel,
+        session: SessionModel
+    }
+
     QR!: Buffer
+
+    getAuthInfo = async (ID: string): Promise<ISession | null> => {
+        if (existsSync(`./${ID}_session.json`)) return require(join(__dirname, '..', '..', `./${ID}_session.json`))
+        const session = await this.DB.session.findOne({ ID })
+        if (!session) return null
+        return session.session
+    }
+
+    saveAuthinfo = async (ID: string): Promise<void> => {
+        const session = await this.DB.session.findOne({ ID })
+        if (!session) return void (await new this.DB.session({ ID, session: this.base64EncodedAuthInfo() }).save())
+        writeFileSync(`./${ID}_session.json`, JSON.stringify(this.base64EncodedAuthInfo(), null, '\t'))
+        this.log(chalk.green(`Saved Authinfo!`))
+        return void (await this.DB.session.updateOne({ ID }, { $set: { session: this.base64EncodedAuthInfo() } }))
+
+    } 
 
     emitNewMessage = async (M: Promise<ISimplifiedMessage>): Promise<void> => void this.emit('new-message', await M)
 
