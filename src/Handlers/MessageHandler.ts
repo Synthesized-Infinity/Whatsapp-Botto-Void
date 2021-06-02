@@ -11,10 +11,11 @@ export default class MessageHandler {
 
     handleMessage = async (M: ISimplifiedMessage): Promise<void> => {
         if (M.chat === 'dm' || !M.groupMetadata) return
-        const { args } = M
-        if (!args[0] || !args[0].startsWith(this.client.config.prefix)) return
+        const { args, groupMetadata, sender } = M
+        if (!args[0] || !args[0].startsWith(this.client.config.prefix)) return void this.client.log(`${chalk.blueBright('MSG')} from ${chalk.green(sender.username)} in ${chalk.cyanBright(groupMetadata.subject)}`)
         const cmd = args[0].slice(this.client.config.prefix.length).toLowerCase()
         const command = this.commands.get(cmd)
+        this.client.log(`${chalk.green('CMD')} ${chalk.yellow(`${args[0]}[${args.length-1}]`)} from ${chalk.green(sender.username)} in ${chalk.cyanBright(groupMetadata.subject)}`)
         if (!command) return void M.reply('No Command Found! Try using one from the help list.')
         if (command.config?.adminonly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
