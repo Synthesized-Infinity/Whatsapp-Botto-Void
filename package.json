@@ -5,7 +5,7 @@
   "main": "dist/void.js",
   "scripts": {
     "build": "tsc -p .",
-    "start": "node dist",
+    "start": "node dist/void.js",
     "lint": "eslint \"src/**/*.ts\"",
     "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
   },
