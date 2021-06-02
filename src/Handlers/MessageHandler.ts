@@ -16,6 +16,7 @@ export default class MessageHandler {
         const cmd = args[0].slice(this.client.config.prefix.length).toLowerCase()
         const command = this.commands.get(cmd)
         if (!command) return void M.reply('No Command Found! Try using one from the help list.')
+        if (command.config?.adminonly && !M.sender.isAdmin) return void M.reply(`Only admins are allowed to use this command`)
         return void command.run(M, this.parseArgs(args))
     }
 
