@@ -75,7 +75,7 @@ export default class WAClient extends Base {
                     mimetype: mime,
                     contextInfo: { mentionedJid: mention }
                 }),
-            mentioned: this.getMentionedUsers(M),
+            mentioned: this.getMentionedUsers(M, type),
             from: jid,
             groupMetadata,
             WAMessage: M
@@ -90,15 +90,10 @@ export default class WAClient extends Base {
         )
     }
 
-    getMentionedUsers = (M: WAMessage): string[] => {
-        const types = Object.values(MessageType)
-        const maps = types.map((type) =>
-            M?.message?.[type as MessageType.extendedText]?.contextInfo?.mentionedJid ||
-            M?.message?.[type as MessageType.extendedText]?.contextInfo?.participant
-                ? [M.message[type as MessageType.extendedText]?.contextInfo?.participant]
-                : []
-        )
-        return maps.filter((map) => map.every((item) => item))[0] as string[]
+    getMentionedUsers = (M: WAMessage, type: string): string[] => {
+        const notEmpty = <TValue>(value: TValue | null | undefined): value is TValue => value !== null && value !== undefined;
+        const array = M?.message?.[type as MessageType.extendedText]?.contextInfo?.mentionedJid ? M?.message[type as MessageType.extendedText]?.contextInfo?.mentionedJid : [] 
+        return (array || []).filter(notEmpty)
     }
 
     //eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
