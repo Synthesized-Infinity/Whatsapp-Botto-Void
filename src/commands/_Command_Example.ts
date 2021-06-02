@@ -3,9 +3,6 @@ import BaseCommand from '../lib/BaseCommand'
 import WAClient from '../lib/WAClient'
 import { ISimplifiedMessage } from '../typings'
 
-/**
- * Command Class
- */
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
         super(client, handler)
