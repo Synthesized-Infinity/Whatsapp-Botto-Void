@@ -8,7 +8,7 @@ import Server from './lib/Server'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
 
-if (!process.env.MONGO_URI) process.exit(0)
+if (!process.env.MONGO_URI) throw new Error('MONGO URL IS NOT PROVIDED')
 const client = new WAClient({
     name: process.env.NAME || 'Void',
     session: process.env.SESSION || 'Void',
