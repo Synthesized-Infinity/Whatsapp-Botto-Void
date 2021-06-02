@@ -17,7 +17,7 @@ export default class Command extends BaseCommand {
             const usr = this.client.contacts[user]
             const username = usr.notify || usr.vname || usr.name || user.split('@')[0]
             if (!M.groupMetadata?.admins?.includes(user)) M.reply(`❌ Skipped *${username}* as they're not an admin`)
-            else {
+            else if (user !== this.client.user.jid) {
                 await this.client.groupDemoteAdmin(M.from, [user])
                 M.reply(`➰ Sucessfully Demoted *${username}*`)
             }
