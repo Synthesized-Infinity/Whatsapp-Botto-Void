@@ -7,6 +7,7 @@ import WAClient from './lib/WAClient'
 import Server from './lib/Server'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
+import CallHandler from './Handlers/CallHandler'
 
 if (!process.env.MONGO_URI) throw new Error('MONGO URL IS NOT PROVIDED')
 const client = new WAClient({
@@ -17,6 +18,7 @@ const client = new WAClient({
 })
 
 const messageHandler = new MessageHandler(client)
+const callHandler = new CallHandler(client)
 messageHandler.loadCommands()
 
 const db = mongoose.connection
@@ -34,6 +36,14 @@ const start = async () => {
     client.on('open', async () => {
         client.log(chalk.green('Connected to WhatsApp!'))
         await client.saveAuthinfo(client.config.session)
+    })
+
+    client.on('CB:Call', async (json) => {
+        const isOffer = json[1]['type'] == 'offer'
+        const number = `${(json[1]['from'] as string).split('@')[0]}@s.whatsapp.net`
+        if (!isOffer) return void null
+        client.log(`${chalk.blue('CALL')} From ${client.contacts[number].notify || number}`)
+        await callHandler.rejectCall(number, json[1].id)
     })
 
     client.on('new-message', messageHandler.handleMessage)

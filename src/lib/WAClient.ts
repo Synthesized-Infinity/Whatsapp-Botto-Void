@@ -44,6 +44,9 @@ export default class WAClient extends Base {
 
     QR!: Buffer
 
+    sendWA = async (message: string): Promise<unknown> => this.send(message)
+
+
     getAuthInfo = async (ID: string): Promise<ISession | null> => {
         if (existsSync(`./${ID}_session.json`)) return require(join(__dirname, '..', '..', `./${ID}_session.json`))
         const session = await this.DB.session.findOne({ ID })
@@ -92,7 +95,7 @@ export default class WAClient extends Base {
             ? JSON.parse(JSON.stringify(M).replace('quotedM', 'm')).message?.[type as MessageType.extendedText]
                   .contextInfo
             : null
-        quoted.sender = M.message?.[type as MessageType.extendedText]?.contextInfo?.participant
+        quoted.sender = M.message?.[type as MessageType.extendedText]?.contextInfo?.participant || null
         return {
             type,
             content,
@@ -109,7 +112,7 @@ export default class WAClient extends Base {
             ) =>
                 await this.sendMessage(jid, content, type || MessageType.text, {
                     quoted: M,
-                    caption: caption,
+                    caption,
                     mimetype: mime,
                     contextInfo: { mentionedJid: mention }
                 }),
