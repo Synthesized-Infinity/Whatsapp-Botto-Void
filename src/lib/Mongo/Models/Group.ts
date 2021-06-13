@@ -29,4 +29,4 @@ const GroupSchema = new Schema({
     }
 })
 
-export const GroupModel = model<IGroupModel>('groups', GroupSchema)
+export default model<IGroupModel>('groups', GroupSchema)

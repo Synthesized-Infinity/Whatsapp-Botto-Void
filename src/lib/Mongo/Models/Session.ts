@@ -14,4 +14,4 @@ const SessionSchema = new Schema({
     }
 })
 
-export const SessionModel = model<ISessionModel>('session', SessionSchema)
+export default model<ISessionModel>('session', SessionSchema)

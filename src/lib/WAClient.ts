@@ -5,9 +5,9 @@ import { existsSync, readdirSync, statSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
 import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage } from '../typings'
-import { UserModel } from './Mongo/Models/User'
-import { GroupModel } from './Mongo/Models/Group'
-import { SessionModel } from './Mongo/Models/Session'
+import UserModel from './Mongo/Models/User'
+import GroupModel from './Mongo/Models/Group'
+import SessionModel from './Mongo/Models/Session'
 
 export default class WAClient extends Base {
     constructor(public config: IConfig) {
