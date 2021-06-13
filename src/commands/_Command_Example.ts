@@ -1,7 +1,7 @@
 import MessageHandler from '../Handlers/MessageHandler'
 import BaseCommand from '../lib/BaseCommand'
 import WAClient from '../lib/WAClient'
-import { ISimplifiedMessage } from '../typings'
+import { IParsedArgs, ISimplifiedMessage } from '../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
@@ -9,7 +9,7 @@ export default class Command extends BaseCommand {
     }
 
     //eslint-disable-next-line
-    run = async (M: ISimplifiedMessage): Promise<void> => {}
+    run = async (M: ISimplifiedMessage, args: IParsedArgs): Promise<void> => {}
 
     config = {
         command: 'command_goes_here',
