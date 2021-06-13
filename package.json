@@ -7,7 +7,8 @@
     "build": "tsc -p .",
     "start": "node dist/void.js",
     "lint": "eslint \"src/**/*.ts\"",
-    "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
+    "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
