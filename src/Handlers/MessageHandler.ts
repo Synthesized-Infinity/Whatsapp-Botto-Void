@@ -10,7 +10,8 @@ export default class MessageHandler {
     constructor(public client: WAClient) {}
 
     handleMessage = async (M: ISimplifiedMessage): Promise<void> => {
-        if (M.chat === 'dm' || !M.groupMetadata) return
+        if (M.WAMessage.key.fromMe || M.from.includes('status')) return void null
+        if (M.chat === 'dm' || !M.groupMetadata) return void null
         const { args, groupMetadata, sender } = M
         if (!args[0] || !args[0].startsWith(this.client.config.prefix))
             return void this.client.log(
