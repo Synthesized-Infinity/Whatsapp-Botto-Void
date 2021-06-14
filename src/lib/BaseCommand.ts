@@ -10,10 +10,11 @@ export default class BaseCommand implements ICommand {
         throw new Error('run method should be defined')
     }
 
-    config = {
+    config: ICommand['config'] = {
         command: 'base',
         description: 'base',
         category: 'none',
-        usage: 'none'
+        usage: 'none',
+        dm: false
     }
 }

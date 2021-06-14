@@ -38,7 +38,7 @@ export default class Command extends BaseCommand {
                 ? 'No Command Found with ""'
                 : `🍁 *Command:* ${command.config?.command}*\n🍀 *Category:* ${
                       command.config?.category || ''
-                  }\n🎀 *Usage:* ${command.config?.usage || ''}\n\n*Description:* ${command.config?.description || ''}`
+                  }\n🌀 *Group Only:* ${command.config.dm || 'false'}\n🎀 *Usage:* ${command.config?.usage || ''}\n\n*Description:* ${command.config?.description || ''}`
         )
     }
 
@@ -46,6 +46,7 @@ export default class Command extends BaseCommand {
         command: 'help',
         description: 'Displays the help menu or shows the info of the command provided',
         category: 'general',
-        usage: `${this.client.config.prefix}help (command_name)`
+        usage: `${this.client.config.prefix}help (command_name)`,
+        dm: true
     }
 }
