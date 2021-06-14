@@ -16,6 +16,7 @@ const client = new WAClient({
     prefix: process.env.PREFIX || '!',
     mods: (process.env.MODS || '').split(',').map((number) => `${number}@s.whatsapp.net`)
 })
+client.log('Starting...')
 
 const messageHandler = new MessageHandler(client)
 const callHandler = new CallHandler(client)
