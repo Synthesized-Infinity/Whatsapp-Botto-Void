@@ -22,12 +22,12 @@ export default class Command extends BaseCommand {
                     categories[info.config.category].push(info)
                 }
             }
-            let text = `🗒️ *${this.client.config.name} Command List* 🗒️\n\n`
+            let text = `💖 *${this.client.config.name} Command List* 💖\n\n`
             const sortedKeys = Object.keys(categories).sort()
             for (const key of sortedKeys)
-                text += `🌟 *${this.client.util.capitalize(key)} 🌟*\n\`\`\`${categories[key]
-                    .map((command) => command.config?.command)
-                    .join(',')}\`\`\`\n\n`
+                text += `${this.emojis[sortedKeys.indexOf(key)]} *${this.client.util.capitalize(
+                    key
+                )}*\n\`\`\`${categories[key].map((command) => command.config?.command).join(',')}\`\`\`\n\n`
             return void M.reply(
                 `${text}💠 *Note: Use ${this.client.config.prefix}help <command_name> to view the command info*`
             )
@@ -51,4 +51,6 @@ export default class Command extends BaseCommand {
         usage: `${this.client.config.prefix}help (command_name)`,
         dm: true
     }
+
+    emojis = ['👑', '💮', '🎋', '🌀', '🔖', '🍀']
 }
