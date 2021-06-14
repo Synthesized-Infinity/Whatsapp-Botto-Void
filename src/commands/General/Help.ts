@@ -38,7 +38,9 @@ export default class Command extends BaseCommand {
                 ? 'No Command Found with ""'
                 : `🍁 *Command:* ${command.config?.command}*\n🍀 *Category:* ${
                       command.config?.category || ''
-                  }\n🌀 *Group Only:* ${command.config.dm || 'false'}\n🎀 *Usage:* ${command.config?.usage || ''}\n\n*Description:* ${command.config?.description || ''}`
+                  }\n🌀 *Group Only:* ${command.config.dm || 'false'}\n🎀 *Usage:* ${
+                      command.config?.usage || ''
+                  }\n\n*Description:* ${command.config?.description || ''}`
         )
     }
 
