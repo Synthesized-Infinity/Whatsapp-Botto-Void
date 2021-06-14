@@ -16,7 +16,6 @@ export default class YT {
     getInfo = async (): Promise<ytdl.videoInfo> => await ytdl.getInfo(this.url)
 
     getBuffer = async (filename = `${tmpdir()}/${Math.random().toString(36)}.${this.type === 'audio' ? 'mp3' : 'mp4'}`): Promise<Buffer> => {
-        console.log(this.id)
         const stream = createWriteStream(filename)
         ytdl(this.url, { quality: (this.type === 'audio') ? 'highestaudio' : 'highest' }).pipe(stream)
         filename = await new Promise((resolve, reject) => {
