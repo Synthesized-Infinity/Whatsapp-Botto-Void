@@ -66,6 +66,7 @@ export default class WAClient extends Base {
     supportedMediaMessages = [MessageType.image, MessageType.video]
 
     simplifyMessage = async (M: WAMessage): Promise<ISimplifiedMessage> => {
+        if (M.message?.ephemeralMessage) M.message = M.message.ephemeralMessage.message
         const jid = M.key.remoteJid || ''
         const chat = jid.endsWith('g.us') ? 'group' : 'dm'
         const type = (Object.keys(M.message || {})[0] || '') as MessageType
