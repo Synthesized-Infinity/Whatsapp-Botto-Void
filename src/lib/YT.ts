@@ -4,7 +4,6 @@ import { tmpdir } from 'os'
 import ytdl, { validateURL } from 'ytdl-core'
 
 export default class YT {
-
     id: string
 
     constructor(public url: string, public type: 'audio' | 'video') {
@@ -15,9 +14,11 @@ export default class YT {
 
     getInfo = async (): Promise<ytdl.videoInfo> => await ytdl.getInfo(this.url)
 
-    getBuffer = async (filename = `${tmpdir()}/${Math.random().toString(36)}.${this.type === 'audio' ? 'mp3' : 'mp4'}`): Promise<Buffer> => {
+    getBuffer = async (
+        filename = `${tmpdir()}/${Math.random().toString(36)}.${this.type === 'audio' ? 'mp3' : 'mp4'}`
+    ): Promise<Buffer> => {
         const stream = createWriteStream(filename)
-        ytdl(this.url, { quality: (this.type === 'audio') ? 'highestaudio' : 'highest' }).pipe(stream)
+        ytdl(this.url, { quality: this.type === 'audio' ? 'highestaudio' : 'highest' }).pipe(stream)
         filename = await new Promise((resolve, reject) => {
             stream.on('finish', () => resolve(filename))
             stream.on('error', (err) => reject(err && console.log(err)))
@@ -25,11 +26,12 @@ export default class YT {
         return await readFile(filename)
     }
 
-    getThumbnail = async (): Promise<Buffer> => await request(`https://i.ytimg.com/vi/${this.id}/hqdefault.jpg`, 'buffer') 
+    getThumbnail = async (): Promise<Buffer> =>
+        await request(`https://i.ytimg.com/vi/${this.id}/hqdefault.jpg`, 'buffer')
 
     parseId = (): string => {
         const split = this.url.split('/')
         if (this.url.includes('youtu.be')) return split[split.length - 1]
         return this.url.split('=')[1]
     }
-} 
+}
