@@ -15,7 +15,13 @@ export default class Command extends BaseCommand {
         const audio = new YT(joined, 'audio')
         if (!audio.validateURL()) return void M.reply(`Please provide a Valid YT URL`)
         const { videoDetails } = await audio.getInfo()
-        M.reply(await audio.getThumbnail(), MessageType.image, Mimetype.jpeg, undefined,`🍥 *Title:* ${videoDetails.title}\n🕰️ *Duration:* ${videoDetails.lengthSeconds}\n🗒️ *Description:* ${videoDetails.description}`)
+        M.reply(
+            await audio.getThumbnail(),
+            MessageType.image,
+            Mimetype.jpeg,
+            undefined,
+            `🍥 *Title:* ${videoDetails.title}\n🕰️ *Duration:* ${videoDetails.lengthSeconds}\n🗒️ *Description:* ${videoDetails.description}`
+        )
         M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occured...'))
     }
 
