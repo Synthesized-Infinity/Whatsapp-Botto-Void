@@ -23,8 +23,6 @@ messageHandler.loadCommands()
 
 const db = mongoose.connection
 
-
-
 new Server(Number(process.env.PORT) || 4000, client)
 
 const start = async () => {
@@ -59,5 +57,3 @@ db.once('open', () => {
         start()
     })
 })
-
-
