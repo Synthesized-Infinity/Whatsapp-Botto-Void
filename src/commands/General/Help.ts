@@ -37,7 +37,11 @@ export default class Command extends BaseCommand {
         M.reply(
             !command
                 ? `No Command Found | "${key}"`
+<<<<<<< HEAD
                 : `🍁 *Command:* ${command.config?.command}\n🀄 *Category:* ${
+=======
+                : `🍁 *Command:* ${command.config?.command}*\n🍀 *Category:* ${
+>>>>>>> 4f92a4af2bc714b6e65db1b1a171e24490cdf017
                       command.config?.category || ''
                   }\n🃏 *Group Only:* ${!command.config.dm || 'true'}\n🎀 *Usage:* ${
                       command.config?.usage || ''
