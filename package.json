@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.0",
-    "@canvacord/beta": "^6.0.0-dev-3",
     "@types/qr-image": "^3.2.3",
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
