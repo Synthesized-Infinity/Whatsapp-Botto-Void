@@ -16,6 +16,11 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    Xp: {
+        type: Number,
+        required: true,
+        default: 0
     }
 })
 export default model<IUserModel>('users', UserSchema)
