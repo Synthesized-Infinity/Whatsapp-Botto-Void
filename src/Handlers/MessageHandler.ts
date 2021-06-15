@@ -26,6 +26,8 @@ export default class MessageHandler {
             )} in ${chalk.cyanBright(groupMetadata?.subject || 'DM')}`
         )
         if (!command) return void M.reply('No Command Found! Try using one from the help list.')
+        const user = await this.client.getUser(M.sender.jid)
+        if (user.ban) return void M.reply('You\'re Banned from using commands.')
         if (!command.config?.dm && M.chat === 'dm') return void M.reply('This command can only be used in groups')
         if (command.config?.adminonly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
