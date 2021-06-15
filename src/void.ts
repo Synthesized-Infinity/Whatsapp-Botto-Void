@@ -16,6 +16,7 @@ const client = new WAClient({
     prefix: process.env.PREFIX || '!',
     mods: (process.env.MODS || '').split(',').map((number) => `${number}@s.whatsapp.net`)
 })
+client.log('Starting...')
 
 const messageHandler = new MessageHandler(client)
 const callHandler = new CallHandler(client)
@@ -23,14 +24,7 @@ messageHandler.loadCommands()
 
 const db = mongoose.connection
 
-mongoose.connect(encodeURI(process.env.MONGO_URI), {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-})
-db.once('open', () => client.log(chalk.green('Connected to Database!')))
-
-new Server(Number(process.env.PORT) || 4000, client)
+new Server(Number(process.env.PORT) || 4040, client)
 
 const start = async () => {
     client.on('open', async () => {
@@ -51,7 +45,16 @@ const start = async () => {
     await client.connect()
 }
 
-client.getAuthInfo(client.config.session).then((session) => {
-    if (session) client.loadAuthInfo(session)
-    start()
+mongoose.connect(encodeURI(process.env.MONGO_URI), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
+
+db.once('open', () => {
+    client.log(chalk.green('Connected to Database!'))
+    client.getAuthInfo(client.config.session).then((session) => {
+        if (session) client.loadAuthInfo(session)
+        start()
+    })
 })

@@ -46,7 +46,6 @@ export default class WAClient extends Base {
 
     sendWA = async (message: string): Promise<unknown> => this.send(message)
 
-
     getAuthInfo = async (ID: string): Promise<ISession | null> => {
         if (existsSync(`./${ID}_session.json`)) return require(join(__dirname, '..', '..', `./${ID}_session.json`))
         const session = await this.DB.session.findOne({ ID })
@@ -67,6 +66,7 @@ export default class WAClient extends Base {
     supportedMediaMessages = [MessageType.image, MessageType.video]
 
     simplifyMessage = async (M: WAMessage): Promise<ISimplifiedMessage> => {
+        if (M.message?.ephemeralMessage) M.message = M.message.ephemeralMessage.message
         const jid = M.key.remoteJid || ''
         const chat = jid.endsWith('g.us') ? 'group' : 'dm'
         const type = (Object.keys(M.message || {})[0] || '') as MessageType

@@ -11,15 +11,17 @@ export default class Command extends BaseCommand {
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
-        let buffer;
-        if (M.quoted?.message?.message?.imageMessage || M.quoted?.message?.message?.videoMessage) buffer = await this.client.downloadMediaMessage(M.quoted.message)
-        if (M.WAMessage.message?.imageMessage || M.WAMessage.message?.videoMessage) buffer = await this.client.downloadMediaMessage(M.WAMessage)
+        let buffer
+        if (M.quoted?.message?.message?.imageMessage || M.quoted?.message?.message?.videoMessage)
+            buffer = await this.client.downloadMediaMessage(M.quoted.message)
+        if (M.WAMessage.message?.imageMessage || M.WAMessage.message?.videoMessage)
+            buffer = await this.client.downloadMediaMessage(M.WAMessage)
         if (!buffer) return void M.reply(`You didn't provide any Image/Video to convert`)
-        parsedArgs.flags.forEach((flag) => parsedArgs.joined = parsedArgs.joined.replace(flag, ''))
+        parsedArgs.flags.forEach((flag) => (parsedArgs.joined = parsedArgs.joined.replace(flag, '')))
         const pack = parsedArgs.joined.split('|')
-        const sticker = new Sticker(buffer,  {
-            pack: pack[0],
-            author: pack[1],
+        const sticker = new Sticker(buffer, {
+            pack: pack[1],
+            author: pack[2],
             crop: parsedArgs.flags.includes('--strech')
         })
         await sticker.build()
@@ -30,6 +32,7 @@ export default class Command extends BaseCommand {
         command: 'sticker',
         description: 'Converts images/videos into stickers',
         category: 'utils',
-        usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`
+        usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`,
+        dm: true
     }
 }
