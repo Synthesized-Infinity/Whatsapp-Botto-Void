@@ -4,7 +4,7 @@ import qrImage from 'qr-image'
 import { existsSync, readdirSync, statSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
-import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage } from '../typings'
+import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage, IUserModel } from '../typings'
 import UserModel from './Mongo/Models/User'
 import GroupModel from './Mongo/Models/Group'
 import SessionModel from './Mongo/Models/Session'
@@ -143,6 +143,39 @@ export default class WAClient extends Base {
     //eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     getContact = (jid: string) => {
         return this.contacts[jid] || {}
+    }
+
+    getUser = async (jid: string): Promise<IUserModel> => {
+        let user = await this.DB.user.findOne({ jid })
+        if (!user) user = await new this.DB.user({
+            jid
+        }).save()
+        return user
+    }
+
+    banUser = async (jid: string): Promise<void> => {
+        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: true }})
+        if (!result.nModified) await new this.DB.user({
+            jid,
+            ban: true
+        }).save()
+    }
+
+    unbanUser = async (jid: string): Promise<void> => {
+        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: false }})
+        if (!result.nModified) await new this.DB.user({
+            jid,
+            ban: false
+        }).save()
+    }
+
+    setXp = async (jid: string, min: number, max: number): Promise<void> => {
+        const Xp = (Math.floor(Math.random() * max) + min)
+        const result = await this.DB.user.updateOne({ jid }, { $inc: { Xp }})
+        if (!result.nModified) await new this.DB.user({
+            jid,
+            Xp
+        }).save()
     }
 
     util = {
