@@ -14,5 +14,6 @@ export interface ICommand {
         category?: string
         usage?: string
         dm?: boolean
+        baseXp?: number
     }
 }
