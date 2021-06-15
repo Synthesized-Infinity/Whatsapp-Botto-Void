@@ -41,4 +41,5 @@ export interface IUser {
     jid: string
     ban: boolean
     warnings: number
+    Xp: number
 }
