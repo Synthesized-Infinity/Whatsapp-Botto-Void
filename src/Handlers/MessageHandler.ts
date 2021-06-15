@@ -32,10 +32,14 @@ export default class MessageHandler {
         if (command.config?.adminonly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
         try {
-            return void (await command.run(M, this.parseArgs(args)))
+            await command.run(M, this.parseArgs(args))
+            if (command.config.baseXp) {
+                await this.client.setXp(M.sender.jid, command.config.baseXp || 10, 50)  
+            }
         } catch (err) {
-            this.client.log(err.message, true)
+            return void this.client.log(err.message, true)
         }
+
     }
 
     loadCommands = (): void => {
