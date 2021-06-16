@@ -53,11 +53,11 @@ export default class WAClient extends Base {
         return session.session
     }
 
-    saveAuthinfo = async (ID: string): Promise<void> => {
+    saveAuthInfo = async (ID: string): Promise<void> => {
         const session = await this.DB.session.findOne({ ID })
         if (!session) return void (await new this.DB.session({ ID, session: this.base64EncodedAuthInfo() }).save())
         writeFileSync(`./${ID}_session.json`, JSON.stringify(this.base64EncodedAuthInfo(), null, '\t'))
-        this.log(chalk.green(`Saved Authinfo!`))
+        this.log(chalk.green(`Saved AuthInfo!`))
         return void (await this.DB.session.updateOne({ ID }, { $set: { session: this.base64EncodedAuthInfo() } }))
     }
 

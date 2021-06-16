@@ -29,7 +29,7 @@ export default class MessageHandler {
         const user = await this.client.getUser(M.sender.jid)
         if (user.ban) return void M.reply('You\'re Banned from using commands.')
         if (!command.config?.dm && M.chat === 'dm') return void M.reply('This command can only be used in groups')
-        if (command.config?.adminonly && !M.sender.isAdmin)
+        if (command.config?.adminOnly && !M.sender.isAdmin)
             return void M.reply(`Only admins are allowed to use this command`)
         try {
             await command.run(M, this.parseArgs(args))
