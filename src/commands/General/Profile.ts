@@ -13,7 +13,7 @@ export default class Command extends BaseCommand {
     run = async (M: ISimplifiedMessage): Promise<void> => {
         if (M.quoted?.sender) M.mentioned.push(M.quoted.sender)
         const user = M.mentioned[0] ? M.mentioned[0] : M.sender.jid
-        let username = (user === M.sender.jid) ? M.sender.username : ''
+        let username = user === M.sender.jid ? M.sender.username : ''
         if (!username) {
             const contact = this.client.getContact(user)
             username = contact.notify || contact.vname || contact.name || user.split('@')[0]
@@ -21,11 +21,20 @@ export default class Command extends BaseCommand {
         let pfp: string
         try {
             pfp = await this.client.getProfilePicture(user)
-        } catch(err) {
+        } catch (err) {
             pfp = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'
         }
         const data = await this.client.getUser(user)
-        await M.reply(await request(pfp || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg', 'buffer'), MessageType.image, undefined, undefined,`🎋 *Username: ${username}*\n\n🎫 *About: ${(await this.client.getStatus(user)).status || 'None'}*\n\n🌟 *XP: ${data.Xp || 0}*\n\n👑 *Admin: ${M.groupMetadata?.admins?.includes(user) || false}*\n\n❌ *Ban ${data.ban || false}*`
+        await M.reply(
+            await request(pfp || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg', 'buffer'),
+            MessageType.image,
+            undefined,
+            undefined,
+            `🎋 *Username: ${username}*\n\n🎫 *About: ${
+                (await this.client.getStatus(user)).status || 'None'
+            }*\n\n🌟 *XP: ${data.Xp || 0}*\n\n👑 *Admin: ${
+                M.groupMetadata?.admins?.includes(user) || false
+            }*\n\n❌ *Ban ${data.ban || false}*`
         )
     }
 

@@ -1,15 +1,17 @@
 import { MessageType, Mimetype, WAConnection as Base, WAMessage } from '@adiwajshing/baileys'
 import chalk from 'chalk'
 import qrImage from 'qr-image'
-import { existsSync, readdirSync, statSync, writeFileSync } from 'fs'
+import { existsSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
 import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage, IUserModel } from '../typings'
 import UserModel from './Mongo/Models/User'
 import GroupModel from './Mongo/Models/Group'
 import SessionModel from './Mongo/Models/Session'
+import Utils from './Utils'
 
 export default class WAClient extends Base {
+    assets = new Map<string, Buffer>()
     constructor(public config: IConfig) {
         super()
         this.browserDescription[0] = 'WhatsApp-Botto-Void'
@@ -147,54 +149,40 @@ export default class WAClient extends Base {
 
     getUser = async (jid: string): Promise<IUserModel> => {
         let user = await this.DB.user.findOne({ jid })
-        if (!user) user = await new this.DB.user({
-            jid
-        }).save()
+        if (!user)
+            user = await new this.DB.user({
+                jid
+            }).save()
         return user
     }
 
     banUser = async (jid: string): Promise<void> => {
-        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: true }})
-        if (!result.nModified) await new this.DB.user({
-            jid,
-            ban: true
-        }).save()
+        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: true } })
+        if (!result.nModified)
+            await new this.DB.user({
+                jid,
+                ban: true
+            }).save()
     }
 
     unbanUser = async (jid: string): Promise<void> => {
-        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: false }})
-        if (!result.nModified) await new this.DB.user({
-            jid,
-            ban: false
-        }).save()
+        const result = await this.DB.user.updateOne({ jid }, { $set: { ban: false } })
+        if (!result.nModified)
+            await new this.DB.user({
+                jid,
+                ban: false
+            }).save()
     }
 
     setXp = async (jid: string, min: number, max: number): Promise<void> => {
-        const Xp = (Math.floor(Math.random() * max) + min)
-        const result = await this.DB.user.updateOne({ jid }, { $inc: { Xp }})
-        if (!result.nModified) await new this.DB.user({
-            jid,
-            Xp
-        }).save()
+        const Xp = Math.floor(Math.random() * max) + min
+        const result = await this.DB.user.updateOne({ jid }, { $inc: { Xp } })
+        if (!result.nModified)
+            await new this.DB.user({
+                jid,
+                Xp
+            }).save()
     }
 
-    util = {
-        readdirRecursive: (directory: string): string[] => {
-            const results: string[] = []
-
-            const read = (path: string): void => {
-                const files = readdirSync(path)
-
-                for (const file of files) {
-                    const dir = join(path, file)
-                    if (statSync(dir).isDirectory()) read(dir)
-                    else results.push(dir)
-                }
-            }
-            read(directory)
-            return results
-        },
-
-        capitalize: (text: string): string => `${text.charAt(0).toUpperCase()}${text.slice(1)}`
-    }
+    util = new Utils()
 }
