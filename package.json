@@ -37,7 +37,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@adiwajshing/baileys": "^3.5.0",
+    "@adiwajshing/baileys": "^3.5.1",
     "@types/qr-image": "^3.2.3",
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
