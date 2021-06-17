@@ -29,7 +29,7 @@ new Server(Number(process.env.PORT) || 4040, client)
 const start = async () => {
     client.on('open', async () => {
         client.log(chalk.green('Connected to WhatsApp!'))
-        await client.saveAuthinfo(client.config.session)
+        await client.saveAuthInfo(client.config.session)
     })
 
     client.on('CB:Call', async (json) => {

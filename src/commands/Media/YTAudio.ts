@@ -22,7 +22,7 @@ export default class Command extends BaseCommand {
             undefined,
             `🍥 *Title:* ${videoDetails.title}\n🕰️ *Duration:* ${videoDetails.lengthSeconds}\n🗒️ *Description:* ${videoDetails.description}`
         )
-        M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occured...'))
+        M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occurred...'))
     }
 
     config = {
