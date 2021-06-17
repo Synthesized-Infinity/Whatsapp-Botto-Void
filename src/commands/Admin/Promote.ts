@@ -19,13 +19,13 @@ export default class Command extends BaseCommand {
             if (M.groupMetadata?.admins?.includes(user)) M.reply(`❌ Skipped *${username}* as they're already an admin`)
             else {
                 await this.client.groupMakeAdmin(M.from, [user])
-                M.reply(`👑 Sucessfully Promoted *${username}*`)
+                M.reply(`👑 Successfully Promoted *${username}*`)
             }
         })
     }
 
     config = {
-        adminonly: true,
+        adminOnly: true,
         command: 'promote',
         description: 'promotes the mentioned users',
         category: 'admin',

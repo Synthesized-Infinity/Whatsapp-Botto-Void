@@ -7,7 +7,7 @@ export interface ICommand {
     handler?: MessageHandler
     run(M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void | never> | void | never
     config: {
-        adminonly?: boolean
+        adminOnly?: boolean
         description?: string
         command: string
         id?: string
