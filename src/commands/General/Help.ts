@@ -27,7 +27,7 @@ export default class Command extends BaseCommand {
             for (const key of sortedKeys)
                 text += `${this.emojis[sortedKeys.indexOf(key)]} *${this.client.util.capitalize(
                     key
-                )}*\n❐ \`\`\`${categories[key].map((command) => command.config?.command).join(',')}\`\`\`\n\n`
+                )}*\n❐ \`\`\`${categories[key].map((command) => command.config?.command).join(', ')}\`\`\`\n\n`
             return void M.reply(
                 `${text} 🗃️ *Note: Use ${this.client.config.prefix}help <command_name> to view the command info*`
             )
@@ -39,7 +39,7 @@ export default class Command extends BaseCommand {
                 ? `No Command Found | "${key}"`
                 : `🍁 *Command:* ${command.config?.command}\n🀄 *Category:* ${
                       command.config?.category || ''
-                  }\n🃏 *Group Only:* ${!command.config.dm || 'true'}\n🎀 *Usage:* ${
+                  }\n🃏 *Group Only:* ${!command.config.dm ?? 'true'}\n🎀 *Usage:* ${
                       command.config?.usage || ''
                   }\n\n🔖 *Description:* ${command.config?.description || ''}`
         )
