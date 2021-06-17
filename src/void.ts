@@ -8,6 +8,7 @@ import Server from './lib/Server'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
 import CallHandler from './Handlers/CallHandler'
+import AssetHandler from './Handlers/AssetHandler'
 
 if (!process.env.MONGO_URI) throw new Error('MONGO URL IS NOT PROVIDED')
 const client = new WAClient({
@@ -20,7 +21,9 @@ client.log('Starting...')
 
 const messageHandler = new MessageHandler(client)
 const callHandler = new CallHandler(client)
+const assetHandler = new AssetHandler(client)
 messageHandler.loadCommands()
+assetHandler.loadAssets()
 
 const db = mongoose.connection
 
