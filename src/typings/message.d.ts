@@ -26,4 +26,5 @@ export interface ISimplifiedMessage {
         sender?: string | null
     } | null
     WAMessage: WAMessage
+    urls: string[]
 }

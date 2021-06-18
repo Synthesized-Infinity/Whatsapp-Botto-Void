@@ -121,7 +121,8 @@ export default class WAClient extends Base {
             mentioned: this.getMentionedUsers(M, type),
             from: jid,
             groupMetadata,
-            WAMessage: M
+            WAMessage: M,
+            urls: this.util.getUrls(content || '')
         }
     }
 
