@@ -41,4 +41,14 @@ export interface IUser {
     jid: string
     ban: boolean
     warnings: number
+    Xp: number
+}
+
+export interface IPackage {
+    description: string
+    dependencies: { [key: string]: string }
+    homepage: string
+    repository: {
+        url: string
+    }
 }

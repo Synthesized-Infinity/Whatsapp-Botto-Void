@@ -15,6 +15,7 @@ export default class BaseCommand implements ICommand {
         description: 'base',
         category: 'none',
         usage: 'none',
-        dm: false
+        dm: false,
+        baseXp: 0
     }
 }

@@ -22,7 +22,7 @@ export default class Command extends BaseCommand {
             undefined,
             `🍥 *Title:* ${videoDetails.title}\n🕰️ *Duration:* ${videoDetails.lengthSeconds}\n🗒️ *Description:* ${videoDetails.description}`
         )
-        M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occured...'))
+        M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occurred...'))
     }
 
     config = {
@@ -30,6 +30,7 @@ export default class Command extends BaseCommand {
         description: 'Downloads given YT Video and sends it as Audio',
         category: 'media',
         usage: `${this.client.config.prefix}ytv [URL]`,
-        dm: true
+        dm: true,
+        baseXp: 20
     }
 }

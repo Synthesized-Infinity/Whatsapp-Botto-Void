@@ -22,7 +22,7 @@ export default class Command extends BaseCommand {
         const sticker = new Sticker(buffer, {
             pack: pack[1],
             author: pack[2],
-            crop: parsedArgs.flags.includes('--strech')
+            crop: parsedArgs.flags.includes('--stretch')
         })
         await sticker.build()
         await M.reply(await sticker.get(), MessageType.sticker, Mimetype.webp)
@@ -33,6 +33,7 @@ export default class Command extends BaseCommand {
         description: 'Converts images/videos into stickers',
         category: 'utils',
         usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`,
-        dm: true
+        dm: true,
+        baseXp: 30
     }
 }

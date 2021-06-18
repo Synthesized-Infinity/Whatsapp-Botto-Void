@@ -25,8 +25,8 @@ export default class Server extends EventEmitter {
 
     auth = (req: Request, res: Response, next: NextFunction): void => {
         const { session } = req.query
-        if (!session) return void res.json({ message: `Sesion Query not provided` })
-        if (session !== this.client.config.session) return void res.json({ message: `Invalid Sesion ID` })
+        if (!session) return void res.json({ message: `Session Query not provided` })
+        if (session !== this.client.config.session) return void res.json({ message: `Invalid Session ID` })
         next()
     }
 }
