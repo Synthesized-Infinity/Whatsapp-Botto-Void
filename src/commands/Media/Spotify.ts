@@ -8,7 +8,14 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'spotify',
+            description: 'Downloads given spotify track and sends it as Audio',
+            category: 'media',
+            usage: `${client.config.prefix}spotify [URL]`,
+            dm: true,
+            baseXp: 20
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -28,14 +35,5 @@ export default class Command extends BaseCommand {
             caption
         ).catch(() => M.reply(caption))
         M.reply(await track.getAudio(), MessageType.audio)
-    }
-
-    config = {
-        command: 'spotify',
-        description: 'Downloads given spotify track and sends it as Audio',
-        category: 'media',
-        usage: `${this.client.config.prefix}spotify [URL]`,
-        dm: true,
-        baseXp: 20
     }
 }

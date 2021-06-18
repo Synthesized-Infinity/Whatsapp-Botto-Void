@@ -5,7 +5,12 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'ban',
+            description: 'Bans the tagged users',
+            category: 'dev',
+            usage: `${client.config.prefix}ban [@tag]`
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -27,12 +32,5 @@ export default class Command extends BaseCommand {
             text += `🟥 ${username}: Banned\n`
         }
         M.reply(text)
-    }
-
-    config = {
-        command: 'ban',
-        description: 'Bans the tagged users',
-        category: 'dev',
-        usage: `${this.client.config.prefix}ban [@tag]`
     }
 }

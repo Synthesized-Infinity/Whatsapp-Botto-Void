@@ -7,7 +7,14 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'ytv',
+            description: 'Downloads given YT Video',
+            category: 'media',
+            usage: `${client.config.prefix}ytv [URL]`,
+            dm: true,
+            baseXp: 10
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -25,14 +32,5 @@ export default class Command extends BaseCommand {
         if (Number(videoDetails.lengthSeconds) > 1500)
             return void M.reply('Cannot Download videos longer than 25 Minutes')
         M.reply(await video.getBuffer(), MessageType.video).catch(() => M.reply('An error occured...'))
-    }
-
-    config = {
-        command: 'ytv',
-        description: 'Downloads given YT Video',
-        category: 'media',
-        usage: `${this.client.config.prefix}ytv [URL]`,
-        dm: true,
-        baseXp: 10
     }
 }

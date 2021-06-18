@@ -7,7 +7,13 @@ import { IPackage, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'void',
+            description: 'Displays the info',
+            category: 'misc',
+            usage: `${client.config.prefix}void`,
+            dm: true
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -24,13 +30,5 @@ export default class Command extends BaseCommand {
                 pkg.homepage
             }*\n\n📂 *Repository: ${pkg.repository.url}*`
         )
-    }
-
-    config = {
-        command: 'void',
-        description: 'Displays the info',
-        category: 'misc',
-        usage: `${this.client.config.prefix}void`,
-        dm: true
     }
 }

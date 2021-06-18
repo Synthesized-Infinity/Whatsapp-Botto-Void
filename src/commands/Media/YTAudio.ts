@@ -7,7 +7,14 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'yta',
+            description: 'Downloads given YT Video and sends it as Audio',
+            category: 'media',
+            usage: `${client.config.prefix}ytv [URL]`,
+            dm: true,
+            baseXp: 20
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -23,14 +30,5 @@ export default class Command extends BaseCommand {
             `🍥 *Title:* ${videoDetails.title}\n🕰️ *Duration:* ${videoDetails.lengthSeconds}\n🗒️ *Description:* ${videoDetails.description}`
         )
         M.reply(await audio.getBuffer(), MessageType.audio).catch(() => M.reply('An error occurred...'))
-    }
-
-    config = {
-        command: 'yta',
-        description: 'Downloads given YT Video and sends it as Audio',
-        category: 'media',
-        usage: `${this.client.config.prefix}ytv [URL]`,
-        dm: true,
-        baseXp: 20
     }
 }

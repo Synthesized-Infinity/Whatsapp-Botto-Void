@@ -5,7 +5,12 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'mods',
+            description: "Displays the Moderators' contact info",
+            category: 'general',
+            usage: `${client.config.prefix}mods`
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -19,12 +24,5 @@ export default class Command extends BaseCommand {
                 }*\n🍀 *Contact: https://wa.me/+${user?.jid?.split('@')[0]}*\n\n`)
         )
         return void M.reply(text)
-    }
-
-    config = {
-        command: 'mods',
-        description: "Displays the Moderators' contact info",
-        category: 'general',
-        usage: `${this.client.config.prefix}mods`
     }
 }

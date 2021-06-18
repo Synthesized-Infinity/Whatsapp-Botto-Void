@@ -5,7 +5,12 @@ import { IParsedArgs, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'admins',
+            description: 'Tags all Admins 🎖️',
+            category: 'general',
+            usage: `${client.config.prefix}admins (Message)`
+        })
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
@@ -15,12 +20,5 @@ export default class Command extends BaseCommand {
             undefined,
             [...(M.groupMetadata?.admins || []), M.sender.jid]
         ))
-    }
-
-    config = {
-        command: 'admins',
-        description: 'Tags all Admins 🎖️',
-        category: 'general',
-        usage: `${this.client.config.prefix}admins (Message)`
     }
 }

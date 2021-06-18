@@ -7,7 +7,14 @@ import { IParsedArgs, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'sticker',
+            description: 'Converts images/videos into stickers',
+            category: 'utils',
+            usage: `${client.config.prefix}sticker [(as caption | tag)[video | image]]`,
+            dm: true,
+            baseXp: 30
+        })
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
@@ -26,14 +33,5 @@ export default class Command extends BaseCommand {
         })
         await sticker.build()
         await M.reply(await sticker.get(), MessageType.sticker, Mimetype.webp)
-    }
-
-    config = {
-        command: 'sticker',
-        description: 'Converts images/videos into stickers',
-        category: 'utils',
-        usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`,
-        dm: true,
-        baseXp: 30
     }
 }
