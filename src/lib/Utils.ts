@@ -1,5 +1,6 @@
 import { readdirSync, statSync } from 'fs'
 import { join } from 'path'
+import getUrls from 'get-urls'
 
 export default class {
     readdirRecursive = (directory: string): string[] => {
@@ -19,4 +20,6 @@ export default class {
     }
 
     capitalize = (text: string): string => `${text.charAt(0).toUpperCase()}${text.slice(1)}`
+
+    getUrls = (text: string): string[] => Array.from(getUrls(text))
 }
