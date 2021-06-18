@@ -3,16 +3,16 @@ import MessageHandler from '../../Handlers/MessageHandler'
 import BaseCommand from '../../lib/BaseCommand'
 import WAClient from '../../lib/WAClient'
 import YT from '../../lib/YT'
-import { IParsedArgs, ISimplifiedMessage } from '../../typings'
+import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
         super(client, handler)
     }
 
-    run = async (M: ISimplifiedMessage, { joined }: IParsedArgs): Promise<void> => {
-        if (!joined.trim()) return void M.reply('Please provide a Valid YT URL')
-        const audio = new YT(joined, 'audio')
+    run = async (M: ISimplifiedMessage): Promise<void> => {
+        if (!M.urls.length) return void M.reply('Please provide the URL of the YT video you want too download')
+        const audio = new YT(M.urls[0], 'audio')
         if (!audio.validateURL()) return void M.reply(`Please provide a Valid YT URL`)
         const { videoDetails } = await audio.getInfo()
         M.reply(
