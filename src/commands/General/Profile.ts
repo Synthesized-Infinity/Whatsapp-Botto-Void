@@ -11,7 +11,8 @@ export default class Command extends BaseCommand {
             command: 'profile',
             description: 'Displays user-profile 🌟',
             category: 'general',
-            usage: `${client.config.prefix}profile (@tag)`
+            usage: `${client.config.prefix}profile (@tag)`,
+            aliases: ['p']
         })
     }
 
