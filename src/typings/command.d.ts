@@ -19,4 +19,4 @@ export interface ICommand {
     }
 }
 
-type TCategory = 'general' | 'moderation' | 'misc' | 'media' | 'utils' | 'dev' | 'category'
+export type TCategory = 'general' | 'moderation' | 'misc' | 'media' | 'utils' | 'dev' | 'category'
