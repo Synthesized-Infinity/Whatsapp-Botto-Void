@@ -12,9 +12,11 @@ export interface ICommand {
         description?: string
         command: string
         id?: string
-        category?: string
+        category?: TCategory
         usage?: string
         dm?: boolean
         baseXp?: number
     }
 }
+
+type TCategory = 'general' | 'moderation' | 'misc' | 'media' | 'utils' | 'dev' | 'category'
