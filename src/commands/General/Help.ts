@@ -5,7 +5,13 @@ import { ICommand, IParsedArgs, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'help',
+            description: 'Displays the help menu or shows the info of the command provided',
+            category: 'general',
+            usage: `${client.config.prefix}help (command_name)`,
+            dm: true
+        })
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
@@ -43,14 +49,6 @@ export default class Command extends BaseCommand {
                       command.config?.usage || ''
                   }\n\n🔖 *Description:* ${command.config?.description || ''}`
         )
-    }
-
-    config = {
-        command: 'help',
-        description: 'Displays the help menu or shows the info of the command provided',
-        category: 'general',
-        usage: `${this.client.config.prefix}help (command_name)`,
-        dm: true
     }
 
     emojis = ['👑', '🎴', '🔮', '🌀', '⚙️', '🍀']

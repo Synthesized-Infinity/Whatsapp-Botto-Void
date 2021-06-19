@@ -7,7 +7,12 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'profile',
+            description: 'Displays user-profile 🌟',
+            category: 'general',
+            usage: `${client.config.prefix}profile (@tag)`
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -36,12 +41,5 @@ export default class Command extends BaseCommand {
                 M.groupMetadata?.admins?.includes(user) || false
             }*\n\n❌ *Ban ${data.ban || false}*`
         )
-    }
-
-    config = {
-        command: 'profile',
-        description: 'Displays user-profile 🌟',
-        category: 'general',
-        usage: `${this.client.config.prefix}profile (@tag)`
     }
 }

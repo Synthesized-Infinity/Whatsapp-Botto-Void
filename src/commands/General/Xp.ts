@@ -5,7 +5,12 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'xp',
+            description: 'Displays UserXp 🌟',
+            category: 'general',
+            usage: `${client.config.prefix}xp (@tag)`
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -17,12 +22,5 @@ export default class Command extends BaseCommand {
             username = contact.notify || contact.vname || contact.name || user.split('@')[0]
         }
         return void (await M.reply(`${username}'s XP: ${(await this.client.getUser(user)).Xp || 0}`))
-    }
-
-    config = {
-        command: 'xp',
-        description: 'Displays UserXp 🌟',
-        category: 'general',
-        usage: `${this.client.config.prefix}xp (@tag)`
     }
 }
