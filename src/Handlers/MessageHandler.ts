@@ -6,7 +6,7 @@ import { ICommand, IParsedArgs, ISimplifiedMessage } from '../typings'
 
 export default class MessageHandler {
     commands = new Map<string, ICommand>()
-
+    aliases = new Map<string, ICommand>()
     constructor(public client: WAClient) {}
 
     handleMessage = async (M: ISimplifiedMessage): Promise<void> => {
@@ -19,7 +19,7 @@ export default class MessageHandler {
                 )}`
             )
         const cmd = args[0].slice(this.client.config.prefix.length).toLowerCase()
-        const command = this.commands.get(cmd)
+        const command = this.commands.get(cmd) || this.aliases.get(cmd)
         this.client.log(
             `${chalk.green('CMD')} ${chalk.yellow(`${args[0]}[${args.length - 1}]`)} from ${chalk.green(
                 sender.username
@@ -51,6 +51,7 @@ export default class MessageHandler {
                 //eslint-disable-next-line @typescript-eslint/no-var-requires
                 const command: BaseCommand = new (require(file).default)(this.client, this)
                 this.commands.set(command.config.command, command)
+                if (command.config.aliases) command.config.aliases.forEach((alias) => this.aliases.set(alias, command))
                 this.client.log(`Loaded: ${chalk.green(command.config.command)} from ${chalk.green(file)}`)
                 return command
             }

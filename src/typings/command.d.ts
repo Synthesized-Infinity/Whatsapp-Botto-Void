@@ -8,6 +8,7 @@ export interface ICommand {
     run(M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void | never> | void | never
     config: {
         adminOnly?: boolean
+        aliases?: string[]
         description?: string
         command: string
         id?: string
