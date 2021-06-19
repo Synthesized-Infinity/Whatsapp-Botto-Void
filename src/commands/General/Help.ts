@@ -52,5 +52,5 @@ export default class Command extends BaseCommand {
         )
     }
 
-    emojis = ['👑', '🎴', '🔮', '🌀', '⚙️', '🍀']
+    emojis = ['🌀', '🎴', '🔮', '👑', '⚙️', '🍀']
 }
