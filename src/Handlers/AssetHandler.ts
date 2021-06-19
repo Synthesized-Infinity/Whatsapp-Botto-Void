@@ -10,6 +10,7 @@ export default class {
 
     loadAssets = (): void => {
         const files = this.client.util.readdirRecursive(this.path)
+        this.client.log(chalk.green('Loading Assets...'))
         files.map((file) => {
             const buffer = readFileSync(file)
             const split = file.split('/')

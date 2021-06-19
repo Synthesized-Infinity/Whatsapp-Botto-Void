@@ -42,7 +42,7 @@ export default class MessageHandler {
     }
 
     loadCommands = (): void => {
-        this.client.log('Loading Commands...')
+        this.client.log(chalk.green('Loading Commands...'))
         const path = join(__dirname, '..', 'commands')
         const files = this.client.util.readdirRecursive(path)
         files.map((file) => {
