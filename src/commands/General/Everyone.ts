@@ -16,6 +16,11 @@ export default class Command extends BaseCommand {
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
-        return void (await M.reply(`${M.groupMetadata?.subject || 'EVERYONE'}\n*[TAGS HIDDEN]*`, undefined, undefined, M.groupMetadata?.participants.map((user) => user.jid)))
+        return void (await M.reply(
+            `${M.groupMetadata?.subject || 'EVERYONE'}\n*[TAGS HIDDEN]*`,
+            undefined,
+            undefined,
+            M.groupMetadata?.participants.map((user) => user.jid)
+        ))
     }
 }
