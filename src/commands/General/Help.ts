@@ -10,7 +10,8 @@ export default class Command extends BaseCommand {
             description: 'Displays the help menu or shows the info of the command provided',
             category: 'general',
             usage: `${client.config.prefix}help (command_name)`,
-            dm: true
+            dm: true,
+            aliases: ['h']
         })
     }
 
@@ -39,12 +40,12 @@ export default class Command extends BaseCommand {
             )
         }
         const key = parsedArgs.joined.toLowerCase()
-        const command = this.handler.commands.get(key)
+        const command = this.handler.commands.get(key) || this.handler.aliases.get(key)
         M.reply(
             !command
-                ? `No Command Found | "${key}"`
-                : `🍁 *Command:* ${command.config?.command}\n🀄 *Category:* ${
-                      command.config?.category || ''
+                ? `No Command of Alias Found | "${key}"`
+                : `🎫 *Command:* ${command.config?.command}\n🀄 *Category:* ${command.config?.category || ''}${
+                      command.config.aliases ? `\n🍥 *Aliases:* ${command.config.aliases.join(', ')}` : ''
                   }\n🃏 *Group Only:* ${!command.config.dm ?? 'true'}\n🎀 *Usage:* ${
                       command.config?.usage || ''
                   }\n\n🔖 *Description:* ${command.config?.description || ''}`
