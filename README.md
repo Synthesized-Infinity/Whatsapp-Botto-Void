@@ -25,6 +25,24 @@
 + Feel free to open issues regarding any problems or if you have any feature requests
 + Make sure to follow the ESLint Rules while editing the code and run `npm run prettier-format` before opening PRs
 
+|Admin| usage |
+|------|--------|
+|Promote |  Makes user admin      |
+|Demote |Removes user adminship  |
+| Remove | remove user |
+
+|Media| usage |
+|-----|--------|
+|Spotify|  Downloads songs from Spotify|
+|YouTube video |Downloads video from YouTube|
+|YouTube audio| Downloads audio from YouTube|
+
+|Utils| usage |
+|-----|--------|
+|Sticker|  Contains sticker related Coomands |
+
+#### Send hi to see if the bot is on or not.
+
 ## 🌐 Join Us
 ### 🔵 Discord Server
 [![DISCORD](https://invidget.switchblade.xyz/Nzsb5weQFg)](https://discord.gg/Nzsb5weQFg)
