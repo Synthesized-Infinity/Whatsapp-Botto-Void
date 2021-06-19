@@ -9,7 +9,7 @@ export default class Command extends BaseCommand {
             adminOnly: true,
             command: 'promote',
             description: 'promotes the mentioned users',
-            category: 'admin',
+            category: 'moderation',
             usage: `${client.config.prefix}promote [@mention | tag]`,
             baseXp: 10
         })

@@ -9,7 +9,7 @@ export default class Command extends BaseCommand {
             adminOnly: true,
             command: 'demote',
             description: 'demotes the mentioned users',
-            category: 'admin',
+            category: 'moderation',
             usage: `${client.config.prefix}demote [mention | @tag]`,
             baseXp: 10
         })
