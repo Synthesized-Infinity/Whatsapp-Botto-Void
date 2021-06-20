@@ -31,7 +31,13 @@ new Server(Number(process.env.PORT) || 4040, client)
 
 const start = async () => {
     client.on('open', async () => {
-        client.log(chalk.green('Connected to WhatsApp!'))
+        client.log(
+            chalk.green(
+                `Connected to WhatsApp as ${chalk.blueBright(
+                    client.user.notify || client.user.vname || client.user.name || client.user.jid.split('@')[0]
+                )}`
+            )
+        )
         await client.saveAuthInfo(client.config.session)
     })
 
