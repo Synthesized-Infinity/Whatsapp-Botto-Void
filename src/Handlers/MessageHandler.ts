@@ -12,6 +12,10 @@ export default class MessageHandler {
     handleMessage = async (M: ISimplifiedMessage): Promise<void> => {
         if (M.WAMessage.key.fromMe || M.from.includes('status')) return void null
         const { args, groupMetadata, sender } = M
+        if (M.groupMetadata) {
+            const group = await this.client.getGroupData(M.from)
+            if (group.mod && M.groupMetadata?.admins?.includes(this.client.user.jid)) this.moderate(M)
+        }
         if (!args[0] || !args[0].startsWith(this.client.config.prefix))
             return void this.client.log(
                 `${chalk.blueBright('MSG')} from ${chalk.green(sender.username)} in ${chalk.cyanBright(
@@ -38,6 +42,27 @@ export default class MessageHandler {
             }
         } catch (err) {
             return void this.client.log(err.message, true)
+        }
+    }
+
+    moderate = async (M: ISimplifiedMessage): Promise<void> => {
+        if (M.sender.isAdmin) return void null
+        if (M.urls.length) {
+            const groupinvites = M.urls.filter((url) => url.includes('chat.whatsapp.com'))
+            if (groupinvites.length) {
+                groupinvites.forEach(async (invite) => {
+                    const splitInvite = invite.split('/')
+                    const z = await this.client.groupInviteCode(M.from)
+                    if (z !== splitInvite[splitInvite.length - 1]) {
+                        this.client.log(
+                            `${chalk.blueBright('MOD')} ${chalk.green('Group Invite')} by ${chalk.yellow(
+                                M.sender.username
+                            )} in ${M.groupMetadata?.subject}`
+                        )
+                        return void (await this.client.groupRemove(M.from, [M.sender.jid]))
+                    }
+                })
+            }
         }
     }
 
