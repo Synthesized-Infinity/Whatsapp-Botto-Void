@@ -9,6 +9,7 @@ import mongoose from 'mongoose'
 import chalk from 'chalk'
 import CallHandler from './Handlers/CallHandler'
 import AssetHandler from './Handlers/AssetHandler'
+import EventHandler from './Handlers/EventHandler'
 
 if (!process.env.MONGO_URI) throw new Error('MONGO URL IS NOT PROVIDED')
 const client = new WAClient({
@@ -22,6 +23,7 @@ client.log('Starting...')
 const messageHandler = new MessageHandler(client)
 const callHandler = new CallHandler(client)
 const assetHandler = new AssetHandler(client)
+const eventHandler = new EventHandler(client)
 messageHandler.loadCommands()
 assetHandler.loadAssets()
 
@@ -50,6 +52,8 @@ const start = async () => {
     })
 
     client.on('new-message', messageHandler.handleMessage)
+
+    client.on('group-participants-update', eventHandler.handle)
 
     await client.connect()
 }
