@@ -104,14 +104,19 @@ export default class WAClient extends Base {
                 type?: MessageType,
                 mime?: Mimetype,
                 mention?: string[],
-                caption?: string
-            ) =>
-                await this.sendMessage(jid, content, type || MessageType.text, {
+                caption?: string,
+                thumbnail?: Buffer
+            ) => {
+                const options = {
                     quoted: M,
                     caption,
                     mimetype: mime,
                     contextInfo: { mentionedJid: mention }
-                }),
+                }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                if (thumbnail) (options as any).thumbnail = thumbnail
+                await this.sendMessage(jid, content, type || MessageType.text, options)
+            },
             mentioned: this.getMentionedUsers(M, type),
             from: jid,
             groupMetadata,
