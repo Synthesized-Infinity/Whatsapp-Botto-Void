@@ -1,10 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-const request = async <T, R>(
-    url: string,
-    type: 'json' | 'buffer'
-): Promise<T extends 'buffer' ? Buffer : R extends undefined ? { [key: string]: string | boolean | number } : R> => {
-    return (await axios.get(url, type === 'buffer' ? { responseType: 'arraybuffer' } : undefined)).data
+const request = {
+    json: async <T>(url: string): Promise<T> => (await axios.get<T>(url)).data,
+    buffer: async (url: string): Promise<Buffer> => (await axios.get<Buffer>(url, { responseType: 'arraybuffer' })).data
 }
 
 export const post = async <T>(

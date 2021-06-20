@@ -1,6 +1,6 @@
 import request from './request'
 
-interface IRedditResponse {
+export interface IRedditResponse {
     postLink: string
     subreddit: string
     title: string
@@ -14,12 +14,10 @@ interface IRedditResponse {
 
 export default async (subreddit: string): Promise<IRedditResponse | { error: string }> => {
     try {
-        const response = await request<
-            'json', IRedditResponse
-        >(`https://meme-api.herokuapp.com/gimme/${subreddit}`, 'json')
-        if (!response.url) return { error: 'Invalid Subreddits'}
+        const response = await request.json<IRedditResponse>(`https://meme-api.herokuapp.com/gimme/${subreddit}`)
+        if (!response.url) return { error: 'Invalid Subreddits' }
         return response
     } catch (err) {
-        return { error: 'Invalid Subreddits'}
+        return { error: 'Invalid Subreddits' }
     }
 }

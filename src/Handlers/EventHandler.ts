@@ -32,7 +32,7 @@ export default class EventHandler {
         }
         if (add) {
             let image = (await this.client.getProfilePicture(event.jid)) || this.client.assets.get('404')
-            if (typeof image === 'string') image = await request(image, 'buffer')
+            if (typeof image === 'string') image = await request.buffer(image)
             if (image)
                 return void (await this.client.sendMessage(event.jid, image, MessageType.image, {
                     caption: text,

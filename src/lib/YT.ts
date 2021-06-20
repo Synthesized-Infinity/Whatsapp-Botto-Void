@@ -26,8 +26,7 @@ export default class YT {
         return await readFile(filename)
     }
 
-    getThumbnail = async (): Promise<Buffer> =>
-        await request(`https://i.ytimg.com/vi/${this.id}/hqdefault.jpg`, 'buffer')
+    getThumbnail = async (): Promise<Buffer> => await request.buffer(`https://i.ytimg.com/vi/${this.id}/hqdefault.jpg`)
 
     parseId = (): string => {
         const split = this.url.split('/')

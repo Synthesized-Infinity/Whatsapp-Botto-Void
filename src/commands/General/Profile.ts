@@ -32,7 +32,7 @@ export default class Command extends BaseCommand {
         }
         const data = await this.client.getUser(user)
         await M.reply(
-            await request(pfp || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg', 'buffer'),
+            await request.buffer(pfp || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'),
             MessageType.image,
             undefined,
             undefined,

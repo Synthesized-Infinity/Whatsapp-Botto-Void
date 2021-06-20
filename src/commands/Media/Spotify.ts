@@ -29,7 +29,7 @@ export default class Command extends BaseCommand {
             info.album_name
         }\n📆 *Release Date:* ${info.release_date || ''}`
         M.reply(
-            await request(info?.cover_url as string, 'buffer'),
+            await request.buffer(info?.cover_url as string),
             MessageType.image,
             undefined,
             undefined,
