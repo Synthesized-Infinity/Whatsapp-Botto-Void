@@ -4,7 +4,15 @@ import qrImage from 'qr-image'
 import { existsSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
-import { IConfig, IDBModels, IExtendedGroupMetadata, ISession, ISimplifiedMessage, IUserModel } from '../typings'
+import {
+    IConfig,
+    IDBModels,
+    IExtendedGroupMetadata,
+    IGroupModel,
+    ISession,
+    ISimplifiedMessage,
+    IUserModel
+} from '../typings'
 import UserModel from './Mongo/Models/User'
 import GroupModel from './Mongo/Models/Group'
 import SessionModel from './Mongo/Models/Session'
@@ -186,4 +194,14 @@ export default class WAClient extends Base {
     }
 
     util = new Utils()
+
+    getGroupData = async (jid: string): Promise<IGroupModel> =>
+        (await this.DB.group.findOne({ jid })) || (await new this.DB.group({ jid }).save())
+}
+
+export enum toggleableGroupActions {
+    events = 'events',
+    NSFW = 'nsfw',
+    safe = 'safe',
+    mod = 'mod'
 }
