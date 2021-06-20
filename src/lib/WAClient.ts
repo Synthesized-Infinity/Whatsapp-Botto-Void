@@ -4,19 +4,9 @@ import qrImage from 'qr-image'
 import { existsSync, writeFileSync } from 'fs'
 import moment from 'moment'
 import { join } from 'path'
-import {
-    IConfig,
-    IDBModels,
-    IExtendedGroupMetadata,
-    IGroupModel,
-    ISession,
-    ISimplifiedMessage,
-    IUserModel
-} from '../typings'
-import UserModel from './Mongo/Models/User'
-import GroupModel from './Mongo/Models/Group'
-import SessionModel from './Mongo/Models/Session'
+import { IConfig, IExtendedGroupMetadata, IGroupModel, ISession, ISimplifiedMessage, IUserModel } from '../typings'
 import Utils from './Utils'
+import DatabaseHandler from '../Handlers/DatabaseHandler'
 
 export default class WAClient extends Base {
     assets = new Map<string, Buffer>()
@@ -46,11 +36,7 @@ export default class WAClient extends Base {
         this.on('CB:action,,call', async (json) => this.emit('call', json[2][0][1].from))
     }
 
-    DB: IDBModels = {
-        user: UserModel,
-        group: GroupModel,
-        session: SessionModel
-    }
+    DB = new DatabaseHandler()
 
     QR!: Buffer
 
