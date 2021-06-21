@@ -15,7 +15,7 @@
 `PREFIX` The Prefix of the Bot <br>
 `SESSION` A string to keep track of your session. <brs>
 `MODS` The phone numbers of users who you want to be the bot's Admins separated by a comma and must the numbers must be in the following format: `[cc][number]`. eg: `919744******`<br>
-`MONGO_URI` is the Connection URL to your DB ([Mongo-Atlas-Guide]())<br> 
+`MONGO_URI` is the Connection URL to your DB ([Mongo-Atlas-Guide](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/blob/main/Guides/Mongo-Atlas-guide.md))<br> 
 5. Wait for the building to finish, you should always keep an eye on log messages, you can find log messages in the Dashboard -> More -> View logs
 6. After it builds, click on the "View" or "Open App"
 7. Authenticate By Providing Your SESSION_ID and a QR Code Will Show Up

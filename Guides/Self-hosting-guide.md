@@ -13,15 +13,18 @@
 
 Run the following code to clone the repo
 ```SH
-> git clone https://github.com/Synthesized-Infinity/Whatsapp-Botto-Xre
-> cd Whatsapp-Botto-Xre
+> git clone https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void
+> cd Whatsapp-Botto-Void
 ```
 Run this to install the depencencies
 
 ```SH
 > npm i && npm i -D
 ```
-
+or
+```SH
+> npm ci
+```
 ## ✍ Configuration
 
 Create a file named `.env` then add the following fields
@@ -43,7 +46,7 @@ To get the connection URL there are two ways
 #1 [Mongo Atlas](http://mongodb.com/cloud/atlas) and create an account \
 After you set up your account create a new Cluster \
 Then copy the connection url to your cluster
-([Mongo-Atlas-Guide]())
+([Mongo-Atlas-Guide](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/blob/main/Guides/Mongo-Atlas-guide.md))
 
 #2 If you don't want to use Mongo Atlas you can install MongoDB in your system and use the URI provided in `.env.example`
 Follow the instructions [here](https://docs.mongodb.com/manual/installation/) to install MongoDB in your system
