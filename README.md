@@ -19,7 +19,8 @@
 - Self-Resoting Auth
 - Built with [Baileys](https://github.com/adiwajshing/baileys) (The Best WhatsApp Library Out There) 
 
-## 💻 [Deploy/Hosting Guide](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/tree/main/Guides)
+## 💻 Deploy/Hosting Guide
+- Section Moved to [Void-Guides](https://github.com/Synthesized-Infinity/Void-Guides)
 
 ## 💪 Contribution
 
