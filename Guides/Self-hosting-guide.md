@@ -1,4 +1,4 @@
-# WhatsApp-Botto-Xre Self-hosting Guide
+# WhatsApp-Botto-Void Self-hosting Guide
 
 
 ## ⛵ Prerequisites
@@ -70,4 +70,4 @@ To authenticate scan the QR which shows up in the terminal or the link which is 
 Now you're on your own. Good Luck!
 
 ## Don't want to do the hassle of setting up on your own PC?
-[Set it up on Heroku](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Xre/blob/master/Heroku_Atlas_Guide.md)
+[Set it up on Heroku](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/blob/main/Guides/Heroku-Deploy-Guide.md)
