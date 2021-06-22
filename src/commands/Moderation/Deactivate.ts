@@ -8,7 +8,7 @@ export default class Command extends BaseCommand {
         super(client, handler, {
             adminOnly: true,
             command: 'deactivate',
-            aliases: ['disable', 'deact'],
+            aliases: ['deact'],
             description: 'deactivate certain features on group-chats',
             category: 'moderation',
             usage: `${client.config.prefix}deactivate [feature]`
