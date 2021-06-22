@@ -41,14 +41,16 @@ export default class Command extends BaseCommand {
         }
         const key = parsedArgs.joined.toLowerCase()
         const command = this.handler.commands.get(key) || this.handler.aliases.get(key)
+        if (!command) return void M.reply(`No Command of Alias Found | "${key}"`)
+        const state = await this.client.DB.disabledcommands.findOne({ command: command.config.command })
         M.reply(
-            !command
-                ? `No Command of Alias Found | "${key}"`
-                : `🎫 *Command:* ${command.config?.command}\n🀄 *Category:* ${command.config?.category || ''}${
-                      command.config.aliases ? `\n🍥 *Aliases:* ${command.config.aliases.join(', ')}` : ''
-                  }\n🃏 *Group Only:* ${!command.config.dm ?? 'true'}\n🎀 *Usage:* ${
-                      command.config?.usage || ''
-                  }\n\n🔖 *Description:* ${command.config?.description || ''}`
+            `🎫 *Command:* ${command.config?.command}\n🎗️ *Status:* ${
+                state ? 'Disabled' : 'Available'
+            }\n🀄 *Category:* ${command.config?.category || ''}${
+                command.config.aliases ? `\n🍥 *Aliases:* ${command.config.aliases.join(', ')}` : ''
+            }\n🃏 *Group Only:* ${!command.config.dm ?? 'true'}\n🎀 *Usage:* ${
+                command.config?.usage || ''
+            }\n\n🔖 *Description:* ${command.config?.description || ''}`
         )
     }
 
