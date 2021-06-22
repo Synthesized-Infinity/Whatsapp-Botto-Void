@@ -11,6 +11,7 @@ export default class Command extends BaseCommand {
             command: 'yta',
             description: 'Downloads given YT Video and sends it as Audio',
             category: 'media',
+            aliases: ['ytaudio'],
             usage: `${client.config.prefix}ytv [URL]`,
             dm: true,
             baseXp: 20
