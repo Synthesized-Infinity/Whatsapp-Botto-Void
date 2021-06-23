@@ -18,3 +18,13 @@
 |Mods| Displays the moderator's contact info|
 |Profile| Displays a generated profile of the tagged/mentioned user|
 |Xp| Views the tagged user's xp|
+
+|Fun| usage|
+|----|--------|
+|Triggered| Tag a photo while commanding, given image would be triggered xD|
+
+|Misc| usage|
+|----|--------|
+|Delete| Deletes the quoted message, admin only feature|
+|Hi| WELL|
+|Void| View info :v|
