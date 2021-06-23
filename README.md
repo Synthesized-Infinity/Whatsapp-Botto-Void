@@ -27,6 +27,8 @@
 + Feel free to open issues regarding any problems or if you have any feature requests
 + Make sure to follow the ESLint Rules while editing the code and run `npm run prettier-format` before opening PRs
 
+
+
 ## 🌐 Join Us
 ### 🔵 Discord Server
 [![DISCORD](https://invidget.switchblade.xyz/Nzsb5weQFg)](https://discord.gg/Nzsb5weQFg)
