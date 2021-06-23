@@ -6,14 +6,21 @@ import { ISimplifiedMessage } from '../../typings'
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
         super(client, handler, {
-            command: 'admins',
-            description: 'Tags all Admins 🎖️',
+            command: 'everyone',
+            description: 'Tags all users in group chat',
+            aliases: ['all', 'tagall'],
             category: 'general',
-            usage: `${client.config.prefix}admins (Message)`
+            usage: `${client.config.prefix}everyone`,
+            adminOnly: true
         })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
-        return void (await M.reply(`ADMINS!\n[Tags Hidden]`, undefined, undefined, M.groupMetadata?.admins))
+        return void (await M.reply(
+            `${M.groupMetadata?.subject || 'EVERYONE'}\n*[TAGS HIDDEN]*`,
+            undefined,
+            undefined,
+            M.groupMetadata?.participants.map((user) => user.jid)
+        ))
     }
 }

@@ -7,7 +7,14 @@ import { IParsedArgs, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'sticker',
+            description: 'Converts images/videos into stickers',
+            category: 'utils',
+            usage: `${client.config.prefix}sticker [(as caption | tag)[video | image]]`,
+            dm: true,
+            baseXp: 30
+        })
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
@@ -20,20 +27,11 @@ export default class Command extends BaseCommand {
         parsedArgs.flags.forEach((flag) => (parsedArgs.joined = parsedArgs.joined.replace(flag, '')))
         const pack = parsedArgs.joined.split('|')
         const sticker = new Sticker(buffer, {
-            pack: pack[1],
-            author: pack[2],
+            pack: pack[1] || '🎀 𝖂𝖍𝖆𝖙𝖘𝖆𝖕𝖕 𝕭𝖔𝖙𝖙𝖔',
+            author: pack[2] || '𝖁𝖔𝖎𝖉 🎀',
             crop: parsedArgs.flags.includes('--stretch')
         })
         await sticker.build()
         await M.reply(await sticker.get(), MessageType.sticker, Mimetype.webp)
-    }
-
-    config = {
-        command: 'sticker',
-        description: 'Converts images/videos into stickers',
-        category: 'utils',
-        usage: `${this.client.config.prefix}sticker [(as caption | tag)[video | image]]`,
-        dm: true,
-        baseXp: 30
     }
 }

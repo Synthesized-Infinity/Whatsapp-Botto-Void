@@ -5,7 +5,12 @@ import { IParsedArgs, ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            command: 'eval',
+            description: 'Evaluates JavaScript ➕ ',
+            category: 'dev',
+            usage: `${client.config.prefix}eval [JS CODE]`
+        })
     }
 
     run = async (M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void> => {
@@ -19,12 +24,5 @@ export default class Command extends BaseCommand {
             out = err.message
         }
         return void (await M.reply(out))
-    }
-
-    config = {
-        command: 'eval',
-        description: 'Evaluates JavaScript ➕ ',
-        category: 'dev',
-        usage: `${this.client.config.prefix}eval [JS CODE]`
     }
 }

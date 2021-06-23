@@ -5,7 +5,14 @@ import { ISimplifiedMessage } from '../../typings'
 
 export default class Command extends BaseCommand {
     constructor(client: WAClient, handler: MessageHandler) {
-        super(client, handler)
+        super(client, handler, {
+            adminOnly: true,
+            command: 'remove',
+            description: 'demotes the mentioned users',
+            category: 'moderation',
+            usage: `${client.config.prefix}promote [@mention | tag]`,
+            baseXp: 10
+        })
     }
 
     run = async (M: ISimplifiedMessage): Promise<void> => {
@@ -16,20 +23,11 @@ export default class Command extends BaseCommand {
         M.mentioned.forEach(async (user) => {
             const usr = this.client.contacts[user]
             const username = usr.notify || usr.vname || usr.name || user.split('@')[0]
-            if (M.groupMetadata?.admins?.includes(user)) M.reply(`❌ Skipped *${username}* as they're already an admin`)
+            if (M.groupMetadata?.admins?.includes(user)) M.reply(`❌ Skipped *${username}* as they're an admin`)
             else {
-                await this.client.groupMakeAdmin(M.from, [user])
-                M.reply(`👑 Successfully Promoted *${username}*`)
+                await this.client.groupRemove(M.from, [user])
+                M.reply(`🏌️‍♂️Successfully Removed *${username}*`)
             }
         })
-    }
-
-    config = {
-        adminOnly: true,
-        command: 'promote',
-        description: 'promotes the mentioned users',
-        category: 'admin',
-        usage: `${this.client.config.prefix}promote [@mention | tag]`,
-        baseXp: 10
     }
 }

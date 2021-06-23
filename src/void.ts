@@ -8,6 +8,8 @@ import Server from './lib/Server'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
 import CallHandler from './Handlers/CallHandler'
+import AssetHandler from './Handlers/AssetHandler'
+import EventHandler from './Handlers/EventHandler'
 
 if (!process.env.MONGO_URI) throw new Error('MONGO URL IS NOT PROVIDED')
 const client = new WAClient({
@@ -20,7 +22,10 @@ client.log('Starting...')
 
 const messageHandler = new MessageHandler(client)
 const callHandler = new CallHandler(client)
+const assetHandler = new AssetHandler(client)
+const eventHandler = new EventHandler(client)
 messageHandler.loadCommands()
+assetHandler.loadAssets()
 
 const db = mongoose.connection
 
@@ -28,7 +33,13 @@ new Server(Number(process.env.PORT) || 4040, client)
 
 const start = async () => {
     client.on('open', async () => {
-        client.log(chalk.green('Connected to WhatsApp!'))
+        client.log(
+            chalk.green(
+                `Connected to WhatsApp as ${chalk.blueBright(
+                    client.user.notify || client.user.vname || client.user.name || client.user.jid.split('@')[0]
+                )}`
+            )
+        )
         await client.saveAuthInfo(client.config.session)
     })
 
@@ -41,6 +52,8 @@ const start = async () => {
     })
 
     client.on('new-message', messageHandler.handleMessage)
+
+    client.on('group-participants-update', eventHandler.handle)
 
     await client.connect()
 }

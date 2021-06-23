@@ -10,7 +10,8 @@ export interface ISimplifiedMessage {
         type?: MessageType,
         mime?: Mimetype,
         mention?: string[],
-        caption?: string
+        caption?: string,
+        thumbnail?: Buffer
     ): Promise<unknown>
     mentioned: string[]
     groupMetadata: IExtendedGroupMetadata | null
@@ -26,4 +27,5 @@ export interface ISimplifiedMessage {
         sender?: string | null
     } | null
     WAMessage: WAMessage
+    urls: string[]
 }

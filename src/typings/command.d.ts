@@ -8,12 +8,15 @@ export interface ICommand {
     run(M: ISimplifiedMessage, parsedArgs: IParsedArgs): Promise<void | never> | void | never
     config: {
         adminOnly?: boolean
+        aliases?: string[]
         description?: string
         command: string
         id?: string
-        category?: string
+        category?: TCategory
         usage?: string
         dm?: boolean
         baseXp?: number
     }
 }
+
+export type TCategory = 'general' | 'moderation' | 'misc' | 'media' | 'utils' | 'dev' | 'category' | 'fun'
