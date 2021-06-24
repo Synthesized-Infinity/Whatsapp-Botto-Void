@@ -27,6 +27,8 @@
 ## 📉 Features
 
 - Prefix= Whatever you may specify in the config vars
+
+
 |Admin| usage | 
 |------|--------| 
 |Promote |  Makes user admin      | 
