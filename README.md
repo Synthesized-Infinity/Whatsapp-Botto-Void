@@ -25,7 +25,7 @@
 ## 💪 Contribution
 
 ## 📉 Features
-- Section Moved to [Features.md](https://github.com/AB1RZ9/Whatsapp-Botto-Void/blob/main/Features.md)
+- All available features as of now are listed here➡️[Features.md](https://github.com/AB1RZ9/Whatsapp-Botto-Void/blob/main/Features.md)
 
 ## 📑For Public:-
 + Feel free to open issues regarding any problems or if you have any feature requests
