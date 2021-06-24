@@ -22,6 +22,7 @@
 |Fun| usage|
 |----|--------|
 |Triggered| Tag a photo while commanding, given image would be triggered xD|
+|Chess| Launches a game of chess straight in the group chat, YES THIS IS THE FUTURE! EMBRACE IT!|
 
 |Misc| usage|
 |----|--------|
