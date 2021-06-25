@@ -21,6 +21,9 @@
 
 ## 💻 Deploy/Hosting Guide
 - Section Moved to [Void-Guides](https://github.com/Synthesized-Infinity/Void-Guides)
+## 🍥 Features of the Repo
+- To view all features, click here➡️[Void_featuresList.md](https://github.com/AB1RZ9/Whatsapp-Botto-Void/blob/main/Features.md)
+
 
 ## 💪 Contribution
 
