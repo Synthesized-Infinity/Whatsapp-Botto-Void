@@ -20,6 +20,22 @@ export default class Command extends BaseCommand {
     games = new Map<string, Game | undefined>()
     challenges = new Map<string, { challenger: string; challengee: string } | undefined>()
     ongoing = new Set<string>()
+
+    parseBoard = (board: string[]): string[][] =>
+        this.client.util
+            .chunk(
+                board.map((tile) => {
+                    if (tile === 'bK') return 'k'
+                    if (tile === 'wK') return 'K'
+                    if (tile === 'wk') return 'N'
+                    if (tile === 'bk') return 'n'
+                    if (tile[0] === 'w') return tile[1].toUpperCase()
+                    return tile[1].toLowerCase()
+                }),
+                8
+            )
+            .reverse()
+
     run = async (M: ISimplifiedMessage, { args }: IParsedArgs): Promise<void> => {
         const end = async (winner?: 'Black' | 'White' | string) => {
             const game = this.games.get(M.from)
@@ -99,24 +115,20 @@ export default class Command extends BaseCommand {
                     undefined,
                     Object.values(challenge)
                 )
-                game.start(print, challenge.challenger, challenge.challengee, () => {
+                game.start(print, challenge.challenger, challenge.challengee, async () => {
                     const cig = new CIG()
-                    cig.loadArray(
-                        this.client.util
-                            .chunk(
-                                game.board.getPieces(game.white, game.black).map((tile) => {
-                                    if (tile === 'bK') return 'k'
-                                    if (tile === 'wK') return 'K'
-                                    if (tile === 'wk') return 'N'
-                                    if (tile === 'bk') return 'n'
-                                    if (tile[0] === 'w') return tile[1].toUpperCase()
-                                    return tile[1].toLowerCase()
-                                }),
-                                8
-                            )
-                            .reverse()
-                    )
-                    cig.generateBuffer().then((data) => this.client.sendMessage(M.from, data, MessageType.image))
+                    cig.loadArray(this.parseBoard(game.board.getPieces(game.white, game.black)))
+                    let sent = false
+                    while (!sent) {
+                        try {
+                            await cig
+                                .generateBuffer()
+                                .then(async (data) => await this.client.sendMessage(M.from, data, MessageType.image))
+                            sent = true
+                        } catch (err) {
+                            continue
+                        }
+                    }
                 })
                 return void this.games.set(M.from, game)
             case 'reject':
@@ -148,24 +160,18 @@ export default class Command extends BaseCommand {
                     const move = {
                         piece: genRealMove(to)
                     }
-                    return void g.eventEmitter.emit(M.from, move, print, M.sender.jid, () => {
+                    return void g.eventEmitter.emit(M.from, move, print, M.sender.jid, () => async () => {
                         const cig = new CIG()
-                        cig.loadArray(
-                            this.client.util
-                                .chunk(
-                                    g.board.getPieces(g.white, g.black).map((tile) => {
-                                        if (tile === 'bK') return 'k'
-                                        if (tile === 'wK') return 'K'
-                                        if (tile === 'wk') return 'N'
-                                        if (tile === 'bk') return 'n'
-                                        if (tile[0] === 'w') return tile[1].toUpperCase()
-                                        return tile[1].toLowerCase()
-                                    }),
-                                    8
-                                )
-                                .reverse()
-                        )
-                        cig.generateBuffer().then(async (data) => await M.reply(data, MessageType.image))
+                        cig.loadArray(this.parseBoard(g.board.getPieces(g.white, g.black)))
+                        let sent = false
+                        while (!sent) {
+                            try {
+                                await cig.generateBuffer().then(async (data) => await M.reply(data, MessageType.image))
+                                sent = true
+                            } catch (err) {
+                                continue
+                            }
+                        }
                     })
                 }
                 const from = args[1]
@@ -191,24 +197,18 @@ export default class Command extends BaseCommand {
                     from: fromMove,
                     to: toMove
                 }
-                return void g.eventEmitter.emit(M.from, move, print, M.sender.jid, () => {
+                return void g.eventEmitter.emit(M.from, move, print, M.sender.jid, async () => {
                     const cig = new CIG()
-                    cig.loadArray(
-                        this.client.util
-                            .chunk(
-                                g.board.getPieces(g.white, g.black).map((tile) => {
-                                    if (tile === 'bK') return 'k'
-                                    if (tile === 'wK') return 'K'
-                                    if (tile === 'wk') return 'N'
-                                    if (tile === 'bk') return 'n'
-                                    if (tile[0] === 'w') return tile[1].toUpperCase()
-                                    return tile[1].toLowerCase()
-                                }),
-                                8
-                            )
-                            .reverse()
-                    )
-                    cig.generateBuffer().then((data) => M.reply(data, MessageType.image))
+                    cig.loadArray(this.parseBoard(g.board.getPieces(g.white, g.black)))
+                    let sent = false
+                    while (!sent) {
+                        try {
+                            await cig.generateBuffer().then(async (data) => await M.reply(data, MessageType.image))
+                            sent = true
+                        } catch (err) {
+                            continue
+                        }
+                    }
                 })
             case 'ff':
                 const ga = this.challenges.get(M.from)
