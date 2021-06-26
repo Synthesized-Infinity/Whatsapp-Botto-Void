@@ -9,6 +9,7 @@ export default class Command extends BaseCommand {
             command: 'hi',
             description: 'Well....',
             category: 'misc',
+            aliases: 'hey,hello',
             usage: `${client.config.prefix}hi`,
             dm: true
         })
