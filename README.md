@@ -30,6 +30,11 @@
 + Feel free to open issues regarding any problems or if you have any feature requests
 + Make sure to follow the ESLint Rules while editing the code and run `npm run prettier-format` before opening PRs
 
+## 🤝 Contributers
+
+<a href="https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Synthesized-Infinity/Whatsapp-Botto-Void" />
+</a>
 
 
 ## 🌐 Join Us
