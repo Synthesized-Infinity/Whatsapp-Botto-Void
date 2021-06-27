@@ -26,7 +26,9 @@ export default class Command extends BaseCommand {
         const length = videos.length < 10 ? videos.length : 10
         let text = `🔎 *Results*\n\n`
         for (let i = 0; i < length; i++) {
-            text += `*#${i + 1}*\n📗 *Title:* ${videos[i].title}\n📕 *Channel:* ${videos[i].author.name}\n 📙 *Duration:* ${videos[i].duration}\n📘 *URL:* ${videos[i].url}\n\n`
+            text += `*#${i + 1}*\n📗 *Title:* ${videos[i].title}\n📕 *Channel:* ${
+                videos[i].author.name
+            }\n 📙 *Duration:* ${videos[i].duration}\n📘 *URL:* ${videos[i].url}\n\n`
         }
         this.client.sendMessage(M.from, text, MessageType.extendedText, {
             quoted: M.WAMessage,
