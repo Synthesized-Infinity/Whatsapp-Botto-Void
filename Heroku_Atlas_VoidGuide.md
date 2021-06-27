@@ -29,7 +29,7 @@ PS: If you don't want to use your email, go to https://temp-mail.org/en/ and gen
 
 
 ## 💗️ Steps to deploy your own Botto-VOID on Heroku cloud
-1. [Whatsapp-Botto-Xre](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Xre) - Go there
+1. [Whatsapp-Botto-Void](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void) - Go there
 2. Scroll down a bit and you will see the "Deploy To Heroku" button in purple color (sorry if you are color blind)
 3. Click on it and login or sign up for Heroku
 4. Enter the following fields
