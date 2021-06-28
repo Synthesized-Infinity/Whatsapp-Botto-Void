@@ -38,7 +38,7 @@
         "url": "heroku/nodejs"
       },
       {
-        "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick"
+        "url": "https://github.com/PrajjwalDatir/heroku-buildpack-imagemagick.git"
       },
   
       {
