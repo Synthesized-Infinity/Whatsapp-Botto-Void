@@ -7,6 +7,7 @@ import WAClient from './lib/WAClient'
 import Server from './lib/Server'
 import mongoose from 'mongoose'
 import chalk from 'chalk'
+import cron  from 'node-cron'
 import CallHandler from './Handlers/CallHandler'
 import AssetHandler from './Handlers/AssetHandler'
 import EventHandler from './Handlers/EventHandler'
@@ -41,6 +42,15 @@ const start = async () => {
             )
         )
         await client.saveAuthInfo(client.config.session)
+        if (process.env.CRON) {
+            if (!cron.validate(process.env.CRON)) return void client.log(`Invalid Cron String: ${chalk.bgRedBright(process.env.CRON)}`, true)
+            client.log(`Cron Job for clearing all chats is set for ${chalk.bgGreen(process.env.CRON)}`)
+            cron.schedule(process.env.CRON, async () => {
+                client.log('Clearing All Chats...')
+                await client.modifyAllChats('clear')
+                client.log('Cleared all Chats!')
+            })
+        }
     })
 
     client.on('CB:Call', async (json) => {
