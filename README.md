@@ -22,7 +22,7 @@
 ## 💻 Deploy/Hosting Guide
 - Section Moved to [Void-Guides](https://github.com/Synthesized-Infinity/Void-Guides)
 ## 🍥 Features of the Repo
-- To view all features, click here➡️[Void_featuresList.md](https://github.com/AB1RZ9/Whatsapp-Botto-Void/blob/main/Features.md)
+- To view all features, click here➡️[Void_featuresList.md](https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/blob/main/Features.md)
 
 
 ## 💪 Contribution
@@ -30,6 +30,11 @@
 + Feel free to open issues regarding any problems or if you have any feature requests
 + Make sure to follow the ESLint Rules while editing the code and run `npm run prettier-format` before opening PRs
 
+## 🤝 Contributers
+
+<a href="https://github.com/Synthesized-Infinity/Whatsapp-Botto-Void/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Synthesized-Infinity/Whatsapp-Botto-Void" />
+</a>
 
 
 ## 🌐 Join Us
