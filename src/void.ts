@@ -32,7 +32,7 @@ const db = mongoose.connection
 new Server(Number(process.env.PORT) || 4040, client)
 
 const start = async () => {
-    client.on('open', async () => {
+    client.once('open', async () => {
         client.log(
             chalk.green(
                 `Connected to WhatsApp as ${chalk.blueBright(
