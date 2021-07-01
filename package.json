@@ -55,6 +55,7 @@
     "jimp": "^0.16.1",
     "moment": "^2.29.1",
     "mongoose": "^5.12.12",
+    "node-cron": "^3.0.0",
     "npm": "^7.17.0",
     "qr-image": "^3.2.0",
     "spotifydl-core": "^0.1.2",
